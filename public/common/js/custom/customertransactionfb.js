@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -58,7 +58,7 @@ $(document).ready(function () {
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
             '<input type="hidden" id="member_id" name="member_id">\n' +
-            '<input type="hidden" id="sub_sceme_id" name="sub_sceme_id">\n' +
+            '<input type="hidden" id="sub_scheme_id" name="sub_scheme_id">\n' +
             // '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="customerTransactionLoanModal" type="button">Cancel</button>\n' +
             '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="customerTransactionLoanModal" type="button">Cancel</button>\n' +
             '<button type="submit" class="customertransactionloan btn btn-primary font-weight-bold btn-sm"  type="submit">Save</button>\n' +

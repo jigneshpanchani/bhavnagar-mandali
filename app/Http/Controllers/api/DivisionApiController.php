@@ -37,10 +37,10 @@ class DivisionApiController extends Controller
         }
         exit;
     }
-    
+
     public function saveDivision($data){
 
-        
+
         if(isset($data['id'])){
             $editDivision = $this->divisionModal->update($data, $data['id']);
             $result = ['status'=>'success', 'message'=>'Division Updated Sucessfully'];
@@ -59,17 +59,17 @@ class DivisionApiController extends Controller
     }
 
     public function removeDivision(Request $request){
-        
+
         $data = $this->divisionModal->delete($request->id);
         return $this->successResponse('Data found successfully','data',$data);
     }
 
-    public function getDivisonName(Request $request)
+    public function getDivisionName(Request $request)
     {
         $data = $this->divisionModal->selectdata(['id as Id','name as Name'])->get()->toArray();
         return $this->successResponse('Data found successfully','data',$data);
     }
 
 
-    
+
 }

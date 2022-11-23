@@ -7,7 +7,7 @@
     <!--begin::Brand-->
     <div class="brand flex-column-auto" id="kt_brand">
        <!--begin::Logo-->
-       
+
        <a  href="{{ route('users.index') }}" class="brand-logo">
        <img alt="Logo" src="{{ asset('assets/media/logos/logo-light.png') }}" />
        </a>
@@ -80,7 +80,7 @@
                </a>
             </li>
 
-            <li class="menu-item {{ ($currRoute == 'sceme.index'|| $currRoute == 'sub-sceme.index') ? 'menu-item-open' : ''}}" aria-haspopup="true" data-menu-toggle="hover">
+            <li class="menu-item {{ ($currRoute == 'scheme.index'|| $currRoute == 'sub-scheme.index') ? 'menu-item-open' : ''}}" aria-haspopup="true" data-menu-toggle="hover">
                <a href="javascript:;" class="menu-link menu-toggle">
                   <span class="svg-icon menu-icon">
                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -92,26 +92,26 @@
                         </g>
                      </svg>
                   </span>
-                  <span class="menu-text">Sceme</span>
+                  <span class="menu-text">Scheme</span>
                   <i class="menu-arrow"></i>
                </a>
                <div class="menu-submenu">
                   <i class="menu-arrow"></i>
                   <ul class="menu-subnav">
-                     <li class="menu-item {{ ($currRoute == 'sceme.index') ? 'menu-item-active' : ''}}" aria-haspopup="true">
-                        <a href="{{ route('sceme.index') }}" class="menu-link">
+                     <li class="menu-item {{ ($currRoute == 'scheme.index') ? 'menu-item-active' : ''}}" aria-haspopup="true">
+                        <a href="{{ route('scheme.index') }}" class="menu-link">
                         <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                         </i>
-                        <span class="menu-text">Sceme</span>
+                        <span class="menu-text">Scheme</span>
                         </a>
                      </li>
-                     <li class="menu-item {{ ($currRoute == 'sub-sceme.index') ? 'menu-item-active' : ''}}" aria-haspopup="true">
-                        <a href="{{ route('sub-sceme.index') }}" class="menu-link">
+                     <li class="menu-item {{ ($currRoute == 'sub-scheme.index') ? 'menu-item-active' : ''}}" aria-haspopup="true">
+                        <a href="{{ route('sub-scheme.index') }}" class="menu-link">
                         <i class="menu-bullet menu-bullet-dot">
                         <span></span>
                         </i>
-                        <span class="menu-text">Sub-Sceme</span>
+                        <span class="menu-text">Sub-Scheme</span>
                         </a>
                      </li>
                </div>

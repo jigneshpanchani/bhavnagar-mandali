@@ -9,7 +9,7 @@ $(document).ready(function(){
         dataSource: customDataSource(
             "api/reports-data", {
             },
-            
+
         ),
         pageable: customPageableArr(),
         dataBound: function(e) {
@@ -32,8 +32,8 @@ $(document).ready(function(){
                 title: "CUSTOMER NAME"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_sceme_name #</div>",
-                field: "sub_sceme_name",
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
+                field: "sub_scheme_name",
                 title: "TYPE OF LOAN"
             },
             {
@@ -46,7 +46,7 @@ $(document).ready(function(){
                 field: "current_pending_due",
                 title: "CURRENT PENDING DUE"
             },
-            
+
         ],
         noRecords: noRecordTemplate()
     });

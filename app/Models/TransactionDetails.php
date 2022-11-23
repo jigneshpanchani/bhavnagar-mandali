@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransactionDetails extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'transaction_detail';
 
     protected $fillable = [
@@ -16,7 +16,7 @@ class TransactionDetails extends Model
         'ananya_no',
         'account_no',
         'member_id',
-        'sub_sceme_id',
+        'sub_scheme_id',
         'loan_duration',
         'start_date',
         'maturity_date',

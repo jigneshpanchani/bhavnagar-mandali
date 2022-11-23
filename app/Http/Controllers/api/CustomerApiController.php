@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\TransactionDetails;
-use App\Models\SubSceme;
+use App\Models\SubScheme;
 use App\Repository\Repository;
 use App\Traits\ResponseTrait;
 use DB;
@@ -22,12 +22,12 @@ class CustomerApiController extends Controller
 
         Customer                $customerModal,
         TransactionDetails      $transactionDetailsModal,
-        SubSceme                $subScemeModal
-       
+        SubScheme                $subSchemeModal
+
     ){
          $this->customerModal            = new Repository($customerModal);
          $this->transactionDetailsModal  = new Repository($transactionDetailsModal);
-         $this->subScemeModal            = new Repository($subScemeModal);
+         $this->subSchemeModal            = new Repository($subSchemeModal);
 
     }
 
@@ -39,7 +39,7 @@ class CustomerApiController extends Controller
     }
 
     public function ajaxAction(Request $request) {
-      
+
         $action = $request->input('action');
         $data = $request->input('data');
 
@@ -53,21 +53,21 @@ class CustomerApiController extends Controller
 
                 $result = ['status'=>'success', 'message'=>'Customer ' .$data["status"]. ' Sucessfully'];
                 echo json_encode($result);exit;
-                break;    
-            
+                break;
+
         }
-       
+
     }
 
     public function saveCustomer($data){
-        
-        $getSubSceme = SubSceme::where('name','Sabhasad')->first();
-      
+
+        $getSubScheme = SubScheme::where('name','Sabhasad')->first();
+
         $data['DOB'] = date('Y-m-d', strtotime($data['DOB']));
         $data['joining_date'] = date('Y-m-d', strtotime($data['joining_date']));
         $data['retirement_date'] = date('Y-m-d', strtotime($data['retirement_date']));
         $data['nominee_DOB'] = date('Y-m-d', strtotime($data['nominee_DOB']));
-        
+
         if(isset($data['id'])){
             $data = $this->customerModal->update($data, $data['id']);
             $result = ['status'=>'success', 'message'=>'Customer Updated Sucessfully'];
@@ -77,7 +77,7 @@ class CustomerApiController extends Controller
             $result = ['status'=>'success', 'message'=>'Customer Created Sucessfully'];
 
             $last_record = TransactionDetails::orderBy('id', 'desc')->first();
-        
+
             if(isset($last_record) && !empty($last_record)){
                 $id = $last_record->ananya_no;
                 $id++;
@@ -92,8 +92,8 @@ class CustomerApiController extends Controller
             } else{
                 $ananya_no = "00001";
             }
-        
-        
+
+
             if(isset($last_record) && !empty($last_record)){
                 $id = $last_record->account_no;
                 $id++;
@@ -108,16 +108,16 @@ class CustomerApiController extends Controller
             } else{
                 $account_no = "00001";
             }
-        
-       
-            /*Transaction Array*/       
+
+
+            /*Transaction Array*/
             $transationArray['ananya_no'] = $ananya_no;
             $transationArray['account_no'] = $account_no;
-            $transationArray['member_id'] = $createCustomer->id; 
-            $transationArray['sub_sceme_id'] = $getSubSceme->id;
-            $transationArray['intrest_rate'] = $getSubSceme->rate_of_int;
-            $transationArray['start_date'] = date('Y-m-d',strtotime($createCustomer->joining_date)); 
-            $transationArray['maturity_date'] = date('Y-m-d',strtotime($createCustomer->joining_date. ' + 30 years')); 
+            $transationArray['member_id'] = $createCustomer->id;
+            $transationArray['sub_scheme_id'] = $getSubScheme->id;
+            $transationArray['intrest_rate'] = $getSubScheme->rate_of_int;
+            $transationArray['start_date'] = date('Y-m-d',strtotime($createCustomer->joining_date));
+            $transationArray['maturity_date'] = date('Y-m-d',strtotime($createCustomer->joining_date. ' + 30 years'));
             $transationArray['loan_fd_amount'] = 0;
             $transationArray['installment_amount'] = 0;
             $transationArray['current_due'] = 0;
@@ -135,22 +135,22 @@ class CustomerApiController extends Controller
 
      }
      public function getCustomerDetails(Request $request){
-    
+
         $data = $this->customerModal->getwhereData(['id' => $request->id])->first();
-        $data = $this->transactionDetailsModal->getwhereData(['id' => $request->id])->first(); 
+        $data = $this->transactionDetailsModal->getwhereData(['id' => $request->id])->first();
         return $this->successResponse('Data found successfully','data', $data);
-     } 
+     }
 
      public function getCustomerName(Request $request){
-         
+
          $data = $this->customerModal->selectdata(['id as Id',DB::raw("CONCAT(first_name,'  ',last_name) as Name")])->get()->toArray();
          return $this->successResponse('Data found successfully','data',$data);
      }
 
      public function removeCustomer(Request $request){
-        
+
         $data = $this->customerModal->delete($request->id);
         return $this->successResponse('Data deleted successfully','data',$data);
     }
-    
+
 }

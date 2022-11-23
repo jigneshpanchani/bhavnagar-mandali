@@ -7,25 +7,25 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
         <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ ($pagetitle) ? $pagetitle : 'Static' }}</h5>
         </div>
-        <button class="addsubsceme btn btn-primary font-weight-bolder btn-sm justify-end">Add Sub-Sceme</button>
+        <button class="addsubscheme btn btn-primary font-weight-bolder btn-sm justify-end">Add Sub-Scheme</button>
     </div>
 </div>
 
 <div class="bg-white p-1 rounded">
-    <div id='subscemeList'></div>
+    <div id='subschemeList'></div>
 </div>
 
-<div id="addSubScemeModal" style="display:none;">
-    <form id="addSubScemeForm">
+<div id="addSubSchemeModal" style="display:none;">
+    <form id="addSubSchemeForm">
     </form>
 </div>
 
-<div id="editSubScemeModal" style="display:none">
-    <form id="editSubScemeForm">
+<div id="editSubSchemeModal" style="display:none">
+    <form id="editSubSchemeForm">
     </form>
 </div>
 
-<div id="deleteSubScemenModal" style="display: none"></div>
+<div id="deleteSubSchemenModal" style="display: none"></div>
 
 <script type="text/javascript">
     var login_id = "{{ $login_id }}";

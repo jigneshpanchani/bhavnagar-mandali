@@ -18,7 +18,7 @@ class CreateTransactionDetail extends Migration
             $table->integer('ananya_no');
             $table->integer('account_no');
             $table->integer('member_id');
-            $table->integer('sub_sceme_id')->nullable();
+            $table->integer('sub_scheme_id')->nullable();
             $table->date('start_date');
             $table->date('maturity_date')->nullable();
             $table->string('intrest_rate');

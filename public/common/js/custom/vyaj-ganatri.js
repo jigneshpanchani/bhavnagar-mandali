@@ -9,7 +9,7 @@ $(document).ready(function(){
         dataSource: customDataSource(
             "api/reports-data", {
             },
-            
+
         ),
         pageable: customPageableArr(),
         dataBound: function(e) {
@@ -32,8 +32,8 @@ $(document).ready(function(){
                 title: "CUSTOMER NAME"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_sceme_name #</div>",
-                field: "sub_sceme_name",
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
+                field: "sub_scheme_name",
                 title: "TYPE OF LOAN"
             },
             {
@@ -68,7 +68,7 @@ $(document).ready(function(){
                 grid: { cols: 4, gutter: 10 },
                 items: [
             {
-                field: "sceme",
+                field: "scheme",
                 editor: "DropDownList",
                 label: "Select Yojna",
                 colSpan: 4,
@@ -76,19 +76,19 @@ $(document).ready(function(){
                     select: function (e) {
                         if (e.dataItem) {
                             let postArr = { 'id': e.dataItem.Id }
-                            setDropdownList('sub_sceme_id', 'get-sub-sceme-name', postArr);
+                            setDropdownList('sub_scheme_id', 'get-sub-scheme-name', postArr);
                         }
                     },
                     optionLabel: "Select...",
-                    dataSource: getDropdownDataSource('get-sceme-name', {}),
+                    dataSource: getDropdownDataSource('get-scheme-name', {}),
                     dataValueField: "Id",
                     dataTextField: "Name",
 
-                    validation: { required: { message: "Select Sceme" } }
+                    validation: { required: { message: "Select Scheme" } }
                 },
             },
             {
-                field: "sub_sceme_id",
+                field: "sub_scheme_id",
                 editor: "DropDownList",
                 label: "Select sub yojna",
                 colSpan: 3,
@@ -125,12 +125,12 @@ $(document).ready(function(){
                     ],
                 },
             },
-            { 
+            {
                 field: "start_date",
                 editor: "DatePicker",
                 label: "Start Date",
                 colSpan: 2,
-                validation: {required: true} 
+                validation: {required: true}
             },
             {
                 field: "end_date",
@@ -153,16 +153,16 @@ $(document).ready(function(){
                 validation: { required: false },
                 editorOptions: {
                     items: [
-                            "Calculation of every account", 
+                            "Calculation of every account",
                             "interest calculation summary of all accounts",
                             "Show the interest and product of an account"
                            ],
                     layout: "vertical",
                     labelPosition: "after"
                 }
-            }    
+            }
         ],
-    },     
+    },
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
@@ -195,6 +195,6 @@ function setDropdownList(fieldID, api_url, postArr = {}) {
         dataTextField: "Name",
         dataValueField: "Id",
         dataSource: getDropdownDataSource(api_url, postArr),
-        
+
     });
 }

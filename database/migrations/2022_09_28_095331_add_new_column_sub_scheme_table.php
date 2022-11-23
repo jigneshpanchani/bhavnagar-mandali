@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScemeTable extends Migration
+class AddNewColumnSubSchemeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateScemeTable extends Migration
      */
     public function up()
     {
-        Schema::create('sceme', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('created_by');
-            $table->string('updated_by');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('sub_scheme', function (Blueprint $table) {
+            //
+            $table->integer('rate_of_int')->after('name')->nullable();
         });
     }
 
@@ -30,6 +26,8 @@ class CreateScemeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sceme');
+        Schema::table('sub_scheme', function (Blueprint $table) {
+            //
+        });
     }
 }

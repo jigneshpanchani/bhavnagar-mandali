@@ -4,9 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Sceme;
+use App\Models\SubScheme;
 
-class ScemeController extends Controller
+class SubSchemeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class ScemeController extends Controller
         $data['plugincss'] = array();
         $data['css'] = array();
         $data['pluginjs'] = array();
-        $data['js'] = array('sceme.js');
-        $data['pagetitle'] = "Sceme";
+        $data['pagetitle'] = "Sub-Scheme";
+        $data['js'] = array('sub-scheme.js');
         $data['login_id'] = 1;
-        return view('pages.sceme', $data);
+        return view('pages.sub-scheme', $data);
     }
 
     /**
@@ -87,17 +87,20 @@ class ScemeController extends Controller
      */
     public function destroy($id)
     {
-        $products = Sceme::onlyTrashed()->get();
 
-        return redirect()->route('sceme.index')
-            ->withSuccess(__('Sceme deleted successfully.'));
+        $products = SubScheme::onlyTrashed()->get();
+
+        //$data->delete();
+
+        return redirect()->route('sub-scheme.index')
+            ->withSuccess(__('Sub-Scheme deleted successfully.'));
     }
 
-    public function restore($id) 
-   {
+    public function restore($id)
+{
     User::where('id', $id)->withTrashed()->restore();
 
-    return redirect()->route('sceme.index', ['status' => 'archived'])
-        ->withSuccess(__('Sceme restored successfully.'));
+    return redirect()->route('sub-scheme.index', ['status' => 'archived'])
+        ->withSuccess(__('Sub-Scheme restored successfully.'));
 }
 }

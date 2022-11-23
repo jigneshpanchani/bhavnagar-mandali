@@ -94,7 +94,7 @@ $(document).ready(function () {
                         colSpan: 3,
                         editorOptions: {
                             optionLabel: "Select...",
-                            dataSource: getDropdownDataSource('get-divison-name', []),
+                            dataSource: getDropdownDataSource('get-division-name', []),
                             dataValueField: "Id", //Id
                             dataTextField: "Name"
                         },

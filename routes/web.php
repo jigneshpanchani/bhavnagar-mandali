@@ -33,9 +33,9 @@ Route::resource('users', 'UserController');
 
 Route::resource('division', 'DivisionController');
 
-Route::resource('sceme', 'ScemeController');
+Route::resource('scheme', 'SchemeController');
 
-Route::resource('sub-sceme', 'SubScemeController');
+Route::resource('sub-scheme', 'SubSchemeController');
 
 Route::resource('customer', 'CustomerController');
 

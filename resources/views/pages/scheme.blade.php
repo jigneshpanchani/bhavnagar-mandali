@@ -7,25 +7,25 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ (@$pagetitle) ? $pagetitle : 'Static' }}</h5>
         </div>
-        <button class="addsceme btn btn-primary font-weight-bolder btn-sm justify-end">Add Sceme</button>
+        <button class="addscheme btn btn-primary font-weight-bolder btn-sm justify-end">Add Scheme</button>
     </div>
 </div>
 
 <div class="bg-white p-1 rounded">
-    <div id='scemeList'></div>
+    <div id='schemeList'></div>
 </div>
 
-<div id="addScemeModal" style="display:none">
-    <form id="addScemeForm">
+<div id="addSchemeModal" style="display:none">
+    <form id="addSchemeForm">
     </form>
 </div>
 
-<div id="editScemeModal" style="display:none">
-    <form id="editScemeForm">
+<div id="editSchemeModal" style="display:none">
+    <form id="editSchemeForm">
     </form>
 </div>
 
-<div id="deleteScemenModal" style="display: none"></div>
+<div id="deleteSchemenModal" style="display: none"></div>
 
 <script type="text/javascript">
     var login_id = "{{ $login_id }}";

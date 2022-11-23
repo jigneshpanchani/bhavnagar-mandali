@@ -10,26 +10,26 @@ $(document).ready(function () {
         orientation: "vertical",
         items: [
             {
-                field: "sceme",
+                field: "scheme",
                 editor: "DropDownList",
                 label: "Select Yojna",
                 editorOptions: {
                     select: function (e) {
                         if (e.dataItem) {
                             let postArr = { 'id': e.dataItem.Id }
-                            setDropdownList('sub_sceme_id', 'get-sub-sceme-name', postArr);
+                            setDropdownList('sub_scheme_id', 'get-sub-scheme-name', postArr);
                         }
                     },
                     optionLabel: "Select...",
-                    dataSource: getDropdownDataSource('get-sceme-name', {}),
+                    dataSource: getDropdownDataSource('get-scheme-name', {}),
                     dataValueField: "Id", //Id
                     dataTextField: "Name",
 
-                    validation: { required: { message: "Select Sceme" } }
+                    validation: { required: { message: "Select Scheme" } }
                 },
             },
             {
-                field: "sub_sceme_id",
+                field: "sub_scheme_id",
                 editor: "DropDownList",
                 label: "Select sub yojna",
                 editorOptions: { optionLabel: "Select..." },
@@ -44,12 +44,12 @@ $(document).ready(function () {
             '</div>\n' +
             '</div>',
         submit: function (ev) {
-            saveScemeData('addYojnaForm', 'save_sub_sceme', 'addYojnaModal');
+            saveSchemeData('addYojnaForm', 'save_sub_scheme', 'addYojnaModal');
             ev.preventDefault();
         }
     });
 
-    function saveScemeData(formId = '', type = '', modalId = '') {
+    function saveSchemeData(formId = '', type = '', modalId = '') {
         let serializeArr = $(document).find("#" + modalId).find('input[name], select[name], textarea[name]').serializeArray();
         let dataArr = {}
         $(serializeArr).each(function (i, field) {
@@ -59,40 +59,40 @@ $(document).ready(function () {
 
         var rateofInt = $("#rateogInt").val();
         var accountNo = $("#accountNo").val();
-        
-        if (dataArr.sub_sceme_id == 1 || dataArr.sub_sceme_id == 7) {
+
+        if (dataArr.sub_scheme_id == 1 || dataArr.sub_scheme_id == 7) {
             $(document).find('#customerTransactionBachatModal').find("#account_no").val(accountNo);
             $(document).find('#customerTransactionBachatModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerTransactionBachatModal').find("#member_id").val(member_id);
-            $(document).find('#customerTransactionBachatModal').find("#sub_sceme_id").val(dataArr.sub_sceme_id);
+            $(document).find('#customerTransactionBachatModal').find("#sub_scheme_id").val(dataArr.sub_scheme_id);
             kendowindowOpen("#customerTransactionBachatModal");
             setTimeout(function(){
-                $("#customerTransactionBachatModal_wnd_title").text($("#sub_sceme_id").data("kendoDropDownList").text());
+                $("#customerTransactionBachatModal_wnd_title").text($("#sub_scheme_id").data("kendoDropDownList").text());
             },100);
 
-        } 
-        if(dataArr.sub_sceme_id == 11 || dataArr.sub_sceme_id == 12) {
-            
+        }
+        if(dataArr.sub_scheme_id == 11 || dataArr.sub_scheme_id == 12) {
+
             $(document).find('#customerFdModal').find("#account_no").val(accountNo);
             $(document).find('#customerFdModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerFdModal').find("#member_id").val(member_id);
-            $(document).find('#customerFdModal').find("#sub_sceme_id").val(dataArr.sub_sceme_id);
-            $(document).find('#customerFdModal').find("#loanName").val($("#sub_sceme_id").data("kendoDropDownList").text());
+            $(document).find('#customerFdModal').find("#sub_scheme_id").val(dataArr.sub_scheme_id);
+            $(document).find('#customerFdModal').find("#loanName").val($("#sub_scheme_id").data("kendoDropDownList").text());
             kendowindowOpen("#customerFdModal");
             setTimeout(function(){
-                $("#customerFdModal_wnd_title").text($("#sub_sceme_id").data("kendoDropDownList").text());
+                $("#customerFdModal_wnd_title").text($("#sub_scheme_id").data("kendoDropDownList").text());
             },100);
         }
 
-        if (dataArr.sub_sceme_id == 2 || dataArr.sub_sceme_id == 3 || dataArr.sub_sceme_id == 4) {
+        if (dataArr.sub_scheme_id == 2 || dataArr.sub_scheme_id == 3 || dataArr.sub_scheme_id == 4) {
             $(document).find('#customerTransactionLoanModal').find("#account_no").val(accountNo);
             $(document).find('#customerTransactionLoanModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerTransactionLoanModal').find("#member_id").val(member_id);
-            $(document).find('#customerTransactionLoanModal').find("#sub_sceme_id").val(dataArr.sub_sceme_id);
-            $(document).find('#customerTransactionLoanModal').find("#loanName").val($("#sub_sceme_id").data("kendoDropDownList").text());
+            $(document).find('#customerTransactionLoanModal').find("#sub_scheme_id").val(dataArr.sub_scheme_id);
+            $(document).find('#customerTransactionLoanModal').find("#loanName").val($("#sub_scheme_id").data("kendoDropDownList").text());
             kendowindowOpen("#customerTransactionLoanModal");
             setTimeout(function(){
-                $("#customerTransactionLoanModal_wnd_title").text($("#sub_sceme_id").data("kendoDropDownList").text());
+                $("#customerTransactionLoanModal_wnd_title").text($("#sub_scheme_id").data("kendoDropDownList").text());
             },100);
         }
         $(document).find('#addYojnaModal').getKendoWindow().close();
@@ -131,10 +131,10 @@ $(document).ready(function () {
         $('#rateogInt').val(e.dataItem.rate_of_int)
     }
     //yojna list
-    
+
     $("#yojnaList").kendoGrid({
         dataSource: customDataSource(
-            "api/transaction-data", {}, 
+            "api/transaction-data", {},
             {id: member_id}
         ),
         pageable: customPageableArr(),
@@ -147,7 +147,7 @@ $(document).ready(function () {
         sortable: true,
         resizable: true,
         scrollable: true,
-        
+
         columns: [
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: id #</div>",
@@ -168,10 +168,10 @@ $(document).ready(function () {
                 title: "ACCOUNT NO"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_sceme_name #</div>",
-                field: "sub_sceme_name",
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
+                field: "sub_scheme_name",
                 width: 140,
-                title: "SUB SCEME NAME"
+                title: "SUB SCHEME NAME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: start_date #</div>",
@@ -242,7 +242,7 @@ $(document).ready(function () {
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: closed  #</div>",
                 field: "closed",
-                width: 140, 
+                width: 140,
                 title: "CLOSED"
             },
             {

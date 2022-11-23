@@ -25,7 +25,7 @@ class CustomerTransactionApiController extends Controller
         TransactionDetails    $customertransactionModal,
         LoanSecurity          $customerLoanSecurityModal,
         vyavahar              $vyavaharModal
-        // CustomerTransaction   $customertransactionloanModal 
+        // CustomerTransaction   $customertransactionloanModal
 
     ) {
 
@@ -64,7 +64,7 @@ class CustomerTransactionApiController extends Controller
         $data = $request->input('data');
 
         if (isset($data['member_id'])) {
-            $getData = TransactionDetails::where('member_id', $data['member_id'])->where('sub_sceme_id', 6)->first();
+            $getData = TransactionDetails::where('member_id', $data['member_id'])->where('sub_scheme_id', 6)->first();
             $last_record = TransactionDetails::select('ananya_no')->orderBy('id', 'desc')->first();
 
             if (isset($last_record) && !empty($last_record)) {
@@ -111,7 +111,7 @@ class CustomerTransactionApiController extends Controller
                 break;
             case 'save_fd':
                 $this->SaveFd($data, $ananya_no, $account_no);
-                break;    
+                break;
 
         }
     }
@@ -160,11 +160,11 @@ class CustomerTransactionApiController extends Controller
              $result = ['status' => 'success', 'message' => 'vyavaharModal Created Sucessfully'];
             echo json_encode($result); exit;
         }
-        
+
     }
 
     public function updateVyavhar($getTrans,$data){
-        
+
         if($data['pay_receive'] == 'Receive'){
             if($getTrans->current_pending_due != 0){
                 $loanamount = $getTrans->current_pending_due + $data['amount'];
@@ -196,7 +196,7 @@ class CustomerTransactionApiController extends Controller
                 }
             }
         }
-        
+
         $updateData['current_pending_due'] = $loanamount;
         $updateData['current_balance'] = $amount;
         $updateData['opening_balance'] = $amount;
@@ -232,11 +232,11 @@ class CustomerTransactionApiController extends Controller
 
     public function SaveCustomertransactionloan($data, $ananya_no, $account_no)
     {
-       
+
         $transaction['ananya_no'] = $ananya_no;
         $transaction['account_no'] = $account_no;
         $transaction['member_id'] = $data['member_id'];
-        $transaction['sub_sceme_id'] = $data['sub_sceme_id'];
+        $transaction['sub_scheme_id'] = $data['sub_scheme_id'];
         $transaction['intrest_rate'] = $data['intrest_rate'];
         $transaction['loan_fd_amount'] = $data['loan_fd_amount'];
         $transaction['installment_amount'] = round($data['installment_amount']);
@@ -251,7 +251,7 @@ class CustomerTransactionApiController extends Controller
         $transaction['maturity_date'] = date('Y-m-d', strtotime($data['maturity_date']));
 
         $createcustomertransaction = $this->customertransactionModal->create($transaction);
-        
+
 
         //loan security
 

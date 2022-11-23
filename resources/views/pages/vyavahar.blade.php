@@ -29,11 +29,11 @@
                     </div>
                     <div class="inline-flex items-center justify-start w-full">
                         <p class="w-1/2 text-lg font-medium leading-4 text-gray-900">Yojna:</p>
-                        <p class="text-sm w-1/2 leading-5 font-medium text-gray-800">{{($sceme->name) ? $sceme->name : '' }}</p>
+                        <p class="text-sm w-1/2 leading-5 font-medium text-gray-800">{{($scheme->name) ? $scheme->name : '' }}</p>
                     </div>
                     <div class="inline-flex items-center justify-start w-full">
                         <p class="w-1/2 text-lg font-medium leading-4 text-gray-900">Sub Yojna:</p>
-                        <p class="text-sm w-1/2 leading-5 font-medium text-gray-800">{{($sceme_sub->name) ? $sceme_sub->name : '' }}</p>
+                        <p class="text-sm w-1/2 leading-5 font-medium text-gray-800">{{($scheme_sub->name) ? $scheme_sub->name : '' }}</p>
                     </div>
                 </div>
                 <div class="inline-flex flex-col space-y-4 items-start justify-start w-full">
@@ -62,13 +62,13 @@
         </div>
         <div class="flex bg-white p-1 rounded">
             <div id='transactiondetailList'></div>
-        </div>   
-        
+        </div>
+
 </div>
 
 <script>
     var transaction_id = "<?php echo $id ?>";
- </script> 
+ </script>
 
 {{-- <script>
     //  var member_id = "<?php echo $id ?>";

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    let passArr = { 'sceme_name': $(document).find('#sceme_name').val() };
+    let passArr = { 'scheme_name': $(document).find('#scheme_name').val() };
 
     $.ajaxSetup({
         headers: {
@@ -13,11 +13,11 @@ $(document).ready(function(){
         loading: '<div class="vue-simple-spinner animate-spin" style="position:absolute;top:50%;left:50%;transfrom:translate(-50%,-50%); margin: 0px auto; border-radius: 100%; border-color: rgb(50, 157, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-style: solid; border-width: 3px; border-image: none 100% / 1 / 0 stretch; width: 90px; height: 90px;"></div>'
     };
 
-    $("#subscemeList").kendoGrid({
+    $("#subschemeList").kendoGrid({
         dataSource: customDataSource(
-            "api/sub-sceme-data", {
+            "api/sub-scheme-data", {
                 id: { type: "integer" },
-                sceme_id: {type: "string"},
+                scheme_id: {type: "string"},
                 name:  { type: "string" },
                 rate_of_int: { type: "integer"},
                 created_by: { type: "string" },
@@ -27,7 +27,7 @@ $(document).ready(function(){
         pageable: customPageableArr(),
         dataBound: function(e) {
             setTimeout(function() {
-                setFilterIcon("#subscemeList");
+                setFilterIcon("#subschemeList");
             }, 100);
         },
         filterable: true,
@@ -40,14 +40,14 @@ $(document).ready(function(){
                 title: "ID"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sceme_name #</div>",
-                field: "sceme_name",
-                title: "SCEME NAME"
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: scheme_name #</div>",
+                field: "scheme_name",
+                title: "SCHEME NAME"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_sceme_name #</div>",
-                field: "sub_sceme_name",
-                title: "SUB-SCEME NAME"
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
+                field: "sub_scheme_name",
+                title: "SUB-SCHEME NAME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: rate_of_int #</div>",
@@ -75,7 +75,7 @@ $(document).ready(function(){
         ],
         noRecords: noRecordTemplate()
     });
-    customGridHtml("#subscemeList");
+    customGridHtml("#subschemeList");
 
     function manageAction(id){
         return  '<div class="custom-dropdown">\n' +
@@ -88,49 +88,49 @@ $(document).ready(function(){
                     '<div class="dropdown-menu dropdown-menu-anim-up">\n' +
                         '<ul class="navi navi-hover">\n' +
                             '<li class="navi-item">\n' +
-                                '<a href="#" class="editSubSceme navi-link flex space-x-3 py-2 w-full" data-id = "' + id + '"><span class="k-icon k-i-edit k-icon-edit"></span><span class="text-sm leading-5 navi-text text-gray-700">Edit</span></a>\n' +
+                                '<a href="#" class="editSubScheme navi-link flex space-x-3 py-2 w-full" data-id = "' + id + '"><span class="k-icon k-i-edit k-icon-edit"></span><span class="text-sm leading-5 navi-text text-gray-700">Edit</span></a>\n' +
                             '</li>\n' +
                             '<li class="navi-item">\n' +
-                                '<a href="#" class="deleteSubSceme navi-link flex space-x-3 py-2 w-full" data-id = "' + id + '"><span class="k-icon k-i-delete k-icon-delete"></span><span class="text-sm leading-5 navi-text text-red-700">Delete</span></a>\n' +
+                                '<a href="#" class="deleteSubScheme navi-link flex space-x-3 py-2 w-full" data-id = "' + id + '"><span class="k-icon k-i-delete k-icon-delete"></span><span class="text-sm leading-5 navi-text text-red-700">Delete</span></a>\n' +
                             '</li>\n' +
                         '</ul>\n' +
                     '</div>\n' +
                 '</div>\n';
     }
-//add sub-sceme
-    $("body").on("click", ".addsubsceme", function(){
-        $(document).find("#addSubScemeModal").find('input[name]').removeClass('k-invalid');
-        kendowindowOpen("#addSubScemeModal");
+//add sub-scheme
+    $("body").on("click", ".addsubscheme", function(){
+        $(document).find("#addSubSchemeModal").find('input[name]').removeClass('k-invalid');
+        kendowindowOpen("#addSubSchemeModal");
     });
 
-    $("#addSubScemeModal").kendoWindow(modalopen('Add Sub-Sceme'));
+    $("#addSubSchemeModal").kendoWindow(modalopen('Add Sub-Scheme'));
 
-    $("#addSubScemeForm").kendoForm({
+    $("#addSubSchemeForm").kendoForm({
         orientation: "vertical",
         items: [
             {
-                field: "sceme_id",
+                field: "scheme_id",
                  editor: "DropDownList",
-                label: "Select Sceme",
+                label: "Select Scheme",
                 editorOptions: {
                     optionLabel: "Select...",
-                    dataSource: getDropdownDataSource('get-sceme-name', []),
+                    dataSource: getDropdownDataSource('get-scheme-name', []),
                     dataValueField: "Id", //Id
                     dataTextField: "Name"
                     },
-                    validation: { required: { message: "Select Sceme"} }
+                    validation: { required: { message: "Select Scheme"} }
             },
-            { field: "name", label: "Sub Sceme Name:", validation: { required: { message: "Enter Sub-Sceme Name" } } },
-            { field: "rate_of_int", label: "Rate Of Interest:"}    
+            { field: "name", label: "Sub Scheme Name:", validation: { required: { message: "Enter Sub-Scheme Name" } } },
+            { field: "rate_of_int", label: "Rate Of Interest:"}
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
-                                '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="addSubScemeModal" type="button">Cancel</button>\n' +
-                                '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Add Sub-Sceme</button>\n' +
+                                '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="addSubSchemeModal" type="button">Cancel</button>\n' +
+                                '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Add Sub-Scheme</button>\n' +
                             '</div>\n' +
                         '</div>',
         submit: function(ev) {
-            saveModalData('addSubScemeForm' , 'save_sub_sceme','addSubScemeModal');
+            saveModalData('addSubSchemeForm' , 'save_sub_scheme','addSubSchemeModal');
             ev.preventDefault();
            // return false;
         }
@@ -164,16 +164,16 @@ $(document).ready(function(){
         dataArr.updated_by = login_id;
         $.ajax({
             type: "POST",
-            url: site_url + "api/sub-sceme/ajaxAction",
+            url: site_url + "api/sub-scheme/ajaxAction",
             dataType: "json",
-            data: {'action': 'save_sub_sceme', 'data': dataArr },
+            data: {'action': 'save_sub_scheme', 'data': dataArr },
             success: function (response) {
                 kendo.ui.progress($(document.body), false);
                 $(document).find("#"+modalId).find('input[name]').val('');
                 $(document).find("#"+modalId).find('input[name]').removeClass('k-invalid');
                 $(document).find('#'+modalId).getKendoWindow().close();
-                $('#subscemeList').data('kendoGrid').refresh();
-                $('#subscemeList').data('kendoGrid').dataSource.read();
+                $('#subschemeList').data('kendoGrid').refresh();
+                $('#subschemeList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);
 
             }
@@ -206,37 +206,37 @@ $(document).ready(function(){
     }
 
     //edit
-    $("#editSubScemeModal").kendoWindow(modalopen('Edit Sub-Sceme'));
+    $("#editSubSchemeModal").kendoWindow(modalopen('Edit Sub-Scheme'));
 
-    $("body").on("click", ".editSubSceme", function(){
+    $("body").on("click", ".editSubScheme", function(){
 
         let primaryID = $(this).attr('data-id');
         if (primaryID > 0) {
             // kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
-                url: site_url + "api/get-sub-sceme-details",
+                url: site_url + "api/get-sub-scheme-details",
                 dataType: "json",
                 data: {'id': primaryID},
                 success: function (response) {
                     // kendo.ui.progress($(document.body), false);
-                    let editSubSceme = $(document).find('#editSubScemeForm');
-                 //   console.log(response.data.sceme_id);  return false;
-                    editSubSceme.find("#editId").val(primaryID);
-                    editSubSceme.find('#name').val(response.data.name);
-                    editSubSceme.find("#sceme_id").data('kendoDropDownList').value(response.data.sceme_id);
-                    editSubSceme.find('#rate_of_int').val(response.data.rate_of_int);
+                    let editSubScheme = $(document).find('#editSubSchemeForm');
+                 //   console.log(response.data.scheme_id);  return false;
+                    editSubScheme.find("#editId").val(primaryID);
+                    editSubScheme.find('#name').val(response.data.name);
+                    editSubScheme.find("#scheme_id").data('kendoDropDownList').value(response.data.scheme_id);
+                    editSubScheme.find('#rate_of_int').val(response.data.rate_of_int);
 
 
                 }
             });
        }
-        kendowindowOpen("#editSubScemeModal");
+        kendowindowOpen("#editSubSchemeModal");
     });
 
-    $("#editSubScemeForm").kendoForm({
+    $("#editSubSchemeForm").kendoForm({
         dataSource: customDataSource(
-            "api/sub-sceme-data",{
+            "api/sub-scheme-data",{
 
                 name:    {type: "string"},
                 rate_of_int: { type: "integer"},
@@ -250,29 +250,29 @@ $(document).ready(function(){
         orientation: "vertical",
         items: [
             {
-                field: "sceme_id",
+                field: "scheme_id",
                  editor: "DropDownList",
-                label: "Select Sceme",
+                label: "Select Scheme",
                 editorOptions: {
                     optionLabel: "Select...",
-                    dataSource: getDropdownDataSource('get-sceme-name', []),
+                    dataSource: getDropdownDataSource('get-scheme-name', []),
                     dataValueField: "Id", //Id
                     dataTextField: "Name"
                     },
-                    validation: { required: { message: "Select Sceme"} }
+                    validation: { required: { message: "Select Scheme"} }
             },
-            { field: "name", label: "Sub Sceme Name:", validation: { required: { message: "Enter Sub-Sceme Name" } } },
-            { field: "rate_of_int", label: "Rate Of Interest:"}    
+            { field: "name", label: "Sub Scheme Name:", validation: { required: { message: "Enter Sub-Scheme Name" } } },
+            { field: "rate_of_int", label: "Rate Of Interest:"}
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
-                               '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="editSubScemeModal" type="button">Cancel</button>\n' +
+                               '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" data-type-id="editSubSchemeModal" type="button">Cancel</button>\n' +
                                 '<input type="hidden" id="editId" name="id">\n' +
-                                '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Edit Sub-Sceme</button>\n' +
+                                '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Edit Sub-Scheme</button>\n' +
                             '</div>\n' +
                         '</div>',
         submit: function(ev) {
-            saveModalData('editSubScemeForm' , 'save_sub_sceme', 'editSubScemeModal');
+            saveModalData('editSubSchemeForm' , 'save_sub_scheme', 'editSubSchemeModal');
             ev.preventDefault();
             return false;
         }
@@ -280,14 +280,14 @@ $(document).ready(function(){
 
       //delete
 
-      $("#deleteSubScemenModal").kendoWindow(modalopen('Delete Sub-Sceme'));
-        $("#deleteSubScemenModal").kendoDialog({
+      $("#deleteSubSchemenModal").kendoWindow(modalopen('Delete Sub-Scheme'));
+        $("#deleteSubSchemenModal").kendoDialog({
         width: "400px",
         title: "Delete",
         content: "Are you sure you want to Delete User? <input type='hidden' name='id' id='deleteAgentDocId' />",
         actions: [
             {text: 'Close'},
-            {text: 'Yes', primary: true, action: function () { deleteSubScemeFunction($("#deleteSubScemenModal").find("#deleteAgentDocId").val()); } }
+            {text: 'Yes', primary: true, action: function () { deleteSubSchemeFunction($("#deleteSubSchemenModal").find("#deleteAgentDocId").val()); } }
         ],
         animation: {
             open: {
@@ -297,24 +297,24 @@ $(document).ready(function(){
         visible: false
     });
 
-    $("body").on("click", ".deleteSubSceme", function() {
+    $("body").on("click", ".deleteSubScheme", function() {
         let primaryID = $(this).attr('data-id');
-        $("#deleteSubScemenModal").data("kendoDialog").open();
-        $("#deleteSubScemenModal").find("#deleteAgentDocId").val(primaryID);
+        $("#deleteSubSchemenModal").data("kendoDialog").open();
+        $("#deleteSubSchemenModal").find("#deleteAgentDocId").val(primaryID);
     });
 
-    function deleteSubScemeFunction(primaryID) {
+    function deleteSubSchemeFunction(primaryID) {
         if (primaryID > 0) {
             kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
-                url: site_url + "api/remove-sub-sceme",
+                url: site_url + "api/remove-sub-scheme",
                 dataType: "json",
                 data: { 'id': primaryID},
                 success: function(response) {
                     kendo.ui.progress($(document.body), false);
-                    $('#subscemeList').data('kendoGrid').refresh();
-                    $('#subscemeList').data('kendoGrid').dataSource.read();
+                    $('#subschemeList').data('kendoGrid').refresh();
+                    $('#subschemeList').data('kendoGrid').dataSource.read();
                 }
             });
         }

@@ -16,8 +16,8 @@ class CustomerTransacionVyavharController extends Controller
      */
     public function index()
     {
-        
-        
+
+
     }
 
     /**
@@ -51,8 +51,8 @@ class CustomerTransacionVyavharController extends Controller
     {
         $td = DB::table('transaction_detail')->where('id',$id)->first();
         $md = DB::table('member_details')->where('id',$td->member_id)->first();
-        $sceme_sub = DB::table('sub_sceme')->where('id',$td->sub_sceme_id)->first();
-        $sceme = DB::table('sceme')->where('id',$sceme_sub->sceme_id)->first();
+        $scheme_sub = DB::table('sub_scheme')->where('id',$td->sub_scheme_id)->first();
+        $scheme = DB::table('scheme')->where('id',$scheme_sub->scheme_id)->first();
         $data['id'] = $id;
         $data['plugincss'] = array();
         $data['css'] = array();
@@ -61,9 +61,9 @@ class CustomerTransacionVyavharController extends Controller
         $data['td'] = $td;
         $data['md'] = $md;
         // print_r( $data['md']); exit;
-        $data['sceme'] = $sceme;
-        // print_r($data['sceme']); exit;
-        $data['sceme_sub'] = $sceme_sub;
+        $data['scheme'] = $scheme;
+        // print_r($data['scheme']); exit;
+        $data['scheme_sub'] = $scheme_sub;
         $data['js'] = array('yojna.js');
         return view('pages.vyavahar', $data);
     }

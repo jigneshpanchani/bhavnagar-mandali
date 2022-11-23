@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Division;
-use App\Models\Sceme;
-use App\Models\subSceme;
+use App\Models\Scheme;
+use App\Models\subScheme;
 use App\Traits\CommonTrait;
 use App\Traits\ResponseTrait;
 use App\Models\Customer;
@@ -109,19 +109,19 @@ class Repository
     }
 
 
-    public function getScemeData($request, $countOnly=false){
+    public function getSchemeData($request, $countOnly=false){
         $post = ($request->input()) ? $request->input() : [];
 
         $columnArr = array(
-            'sceme.id',
-            'sceme.name',
+            'scheme.id',
+            'scheme.name',
             'createdby.name as createdBy',
             'updatedBy.name as updatedBy'
         );
 
-        $query = sceme::from('sceme')
-        ->leftjoin('users as createdby', 'createdby.id', '=', 'sceme.created_by')
-        ->leftjoin('users as updatedBy', 'updatedBy.id', '=', 'sceme.updated_by')
+        $query = scheme::from('scheme')
+        ->leftjoin('users as createdby', 'createdby.id', '=', 'scheme.created_by')
+        ->leftjoin('users as updatedBy', 'updatedBy.id', '=', 'scheme.updated_by')
                 ->select($columnArr);
 
         $this->gridDataFilter($query, $post, array());
@@ -133,24 +133,23 @@ class Repository
         return $result;
     }
 
-    public function getSubScemeData($request, $countOnly=false){
+    public function getSubSchemeData($request, $countOnly=false){
 
-        $sceme_id = $request->sceme_id;
+        $scheme_id = $request->scheme_id;
         $post = ($request->input()) ? $request->input() : [];
 
         $columnArr = array(
-            'sub_sceme.id',
-            'sceme.name as sceme_name',
-            'sub_sceme.name as sub_sceme_name',
+            'sub_scheme.id',
+            'scheme.name as scheme_name',
+            'sub_scheme.name as sub_scheme_name',
             'rate_of_int',
             'createdby.name as createdBy',
             'updatedBy.name as updatedBy'
-
         );
-         $query = SubSceme::from('sub_sceme')
-                ->leftjoin('sceme', 'sceme.id', '=', 'sub_sceme.sceme_id')
-                ->leftjoin('users as createdby', 'createdby.id', '=', 'sub_sceme.created_by')
-                ->leftjoin('users as updatedBy', 'updatedBy.id', '=', 'sub_sceme.updated_by')
+         $query = SubScheme::from('sub_scheme')
+                ->leftjoin('scheme', 'scheme.id', '=', 'sub_scheme.scheme_id')
+                ->leftjoin('users as createdby', 'createdby.id', '=', 'sub_scheme.created_by')
+                ->leftjoin('users as updatedBy', 'updatedBy.id', '=', 'sub_scheme.updated_by')
                 ->select($columnArr);
 
         $this->gridDataFilter($query, $post, array());
@@ -184,15 +183,15 @@ class Repository
             'branch_name'             => 'branch_name',
             'member_nominee_name'     => 'member_nominee_name',
             'bank_name'               => 'bank_name',
-            'status'                  => 'status'   
+            'status'                  => 'status'
         );
 
         $query = customer::from('member_details')
 
         ->leftjoin('division', 'division.id', '=', 'member_details.branch_name')
-                   
+
                 ->select($columnArr);
-         
+
         $this->gridDataFilter($query, $post, $columns);
 
         $this->gridDataSorting($query, $post);
@@ -204,14 +203,14 @@ class Repository
 
     public function gettransactionData($request, $countOnly=false){
 
-        // $sub_sceme_id = $request->sub_sceme_id;
+        // $sub_scheme_id = $request->sub_scheme_id;
         $post = ($request->input()) ? $request->input() : [];
 
         $columnArr = array(
             'td.id',
             'td.ananya_no',
             'td.account_no',
-            'sub_sceme.name as sub_sceme_name',
+            'sub_scheme.name as sub_scheme_name',
             'td.start_date',
             'td.maturity_date',
             'td.intrest_rate',
@@ -230,7 +229,7 @@ class Repository
             'id'                    =>'id',
             'ananya_no'             =>'ananya_no',
             'account_no'            =>'account_no',
-            'sub_sceme_name'        =>'sub_sceme_name',
+            'sub_scheme_name'        =>'sub_scheme_name',
             'start_date'            =>'start_date',
             'maturity_date'         =>'maturity_date',
             'intrest_rate'          =>'intrest_rate',
@@ -246,7 +245,7 @@ class Repository
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
-                ->leftjoin('sub_sceme', 'sub_sceme.id', '=', 'td.sub_sceme_id')
+                ->leftjoin('sub_scheme', 'sub_scheme.id', '=', 'td.sub_scheme_id')
                 ->where('member_id',$post['id'])
                 ->select($columnArr);
 
@@ -309,14 +308,14 @@ class Repository
              'interest_paid'            =>'interest_paid',
              'principal_paid'           =>'principal_paid',
              'remaining_amount'         =>'remaining_amount'
-           
+
         );
 
         $query = vyavahar::from('vyavahar')
                  ->where('transaction_id',$request->id)
                 // ->leftjoin('transaction_detail', 'transaction_detail.id', '=', 'vyavahar.transaction_detail_id')
                 ->select($columnArr);
-                
+
 
         $this->gridDataFilter($query, $post, $columns);
 
@@ -334,7 +333,7 @@ class Repository
         $columnArr = array(
             'td.id',
             'td.account_no',
-            'sub_sceme.name as sub_sceme_name',
+            'sub_scheme.name as sub_scheme_name',
             DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
             'td.loan_fd_amount',
             'td.current_pending_due',
@@ -343,14 +342,14 @@ class Repository
         $columns = array(
             'id'                    =>'id',
             'account_no'            =>'account_no',
-            'sub_sceme_name'        =>'sub_sceme_name',
+            'sub_scheme_name'        =>'sub_scheme_name',
             'customer_name'         =>DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
             'loan_fd_amount'        =>'loan_fd_amount',
             'current_pending_due'   =>'current_pending_due',
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
-                ->leftjoin('sub_sceme', 'sub_sceme.id', '=', 'td.sub_sceme_id')
+                ->leftjoin('sub_scheme', 'sub_scheme.id', '=', 'td.sub_scheme_id')
                 ->leftjoin('member_details', 'member_details.id', '=', 'td.member_id')
                 ->where('td.loan_fd_amount', '!=' , '0')
                 ->where('td.current_pending_due', '!=' , '0')

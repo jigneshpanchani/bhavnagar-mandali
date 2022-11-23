@@ -2,7 +2,7 @@
 
     $(document).ready(function(){
 
-        
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -10,7 +10,7 @@
     });
 
         var customer = JSON.parse($('#customerdata').val());
-        
+
         var member =JSON.parse($('#memberdata').val());
       $("#editCustomerForm").kendoForm({
         formData: {
@@ -77,7 +77,7 @@
                             colSpan: 3,
                             validation: { required: true }
                         },
-                       
+
                         {
                             field: "blood_group",
                             editor: "DropDownList",
@@ -86,7 +86,7 @@
                             editorOptions: {
                                 optionLabel: "Select...",
                                 dataTextField: "text",
-                                dataValueField: "value", 
+                                dataValueField: "value",
                                 dataSource:[
                                         {text:"A+",value:"A+"},
                                         {text:"A-",value:"A-"},
@@ -97,7 +97,7 @@
                                         {text:"AB+",value:"AB+"},
                                         {text:"AB-",value:"AB-"},
 
-                                 ]   
+                                 ]
                             },
                                  validation: { required: true}
                         },
@@ -128,7 +128,7 @@
                             colSpan: 3,
                             editorOptions: {
                                 optionLabel: "Select...",
-                                dataSource: getDropdownDataSource('get-divison-name', []),
+                                dataSource: getDropdownDataSource('get-division-name', []),
                                 dataValueField: "Id", //Id
                                 dataTextField: "Name"
                             },
@@ -192,7 +192,7 @@
                                         {text:"Sister",value:"Sister"},
                                         {text:"Son",value:"Son"},
                                         {text:"Wife",value:"Wife"},
-                                    
+
                                 ]
                             },
                                  validation: { required: true}
@@ -246,22 +246,22 @@
                             colSpan: 2,
                             validation: { required: true },
                         },
-                        
+
                         {
                             field: "check_number",
                             label: "Check Number:",
                             colSpan: 2,
                             validation: { number: true, required: true }
                         },
-                    
+
                         {
                             field: "payment_receiver_name",
                             label: "Payment Recever Name:",
                             colSpan: 2,
                             validation: {required: true}
                         },
-                    
-                        
+
+
                     ],
                 },
 
@@ -273,16 +273,16 @@
                                 '<input type="hidden" id="editId" name="id">\n' +
                                 '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Edit Customer</button>\n' +
                             '</div>\n' +
-                        '</div>',          
+                        '</div>',
             submit: function(ev) {
                 let dataArr = {}
                 let serializeArr = $("#editCustomerForm").find('input[name], select[name], textarea[name]').serializeArray();
                 $(serializeArr).each(function (i, field) {
                     dataArr[field.name] = field.value;
-                
+
                 });
-        
-            
+
+
             // console.log(serializeArr);
                 $.ajax({
                     type: "POST",
@@ -293,13 +293,13 @@
                         kendo.ui.progress($(document.body), false);
                         let editCustomer = $(document).find('#editCustomerForm');
                         notificationDisplay(response.message, '', response.status);
-                        window.location.href = "/customer"; 
+                        window.location.href = "/customer";
 
                     }
                 });
 
                 ev.preventDefault();
-            
+
             return false;
             },
         });
@@ -310,7 +310,7 @@
         //     $(serializeArr).each(function (i, field) {
         //         dataArr[field.name] = field.value;
         //     });
-        //     console.log(dataArr); 
+        //     console.log(dataArr);
         //     $.ajax({
         //         type: "POST",
         //         url: site_url + "api/customer/ajaxAction",
@@ -321,7 +321,7 @@
         //         }
         //     });
         // }
-            
+
         function getDropdownDataSource(api_url, postArr = []) {
             return {
                 schema: {

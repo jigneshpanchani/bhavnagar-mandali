@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\SubSceme;
+use App\Models\SubScheme;
 
 class CustomerController extends Controller
 {
@@ -32,10 +32,10 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        // $getSubSceme = SubSceme::where('name','Sabhasad')->first();
-        // // dd($getSubSceme->id);
-        // dd($getSubSceme->rate_of_int);
-        
+        // $getSubScheme = SubScheme::where('name','Sabhasad')->first();
+        // // dd($getSubScheme->id);
+        // dd($getSubScheme->rate_of_int);
+
         $data['plugincss'] = array();
         $data['css'] = array();
         $data['pluginjs'] = array();
@@ -43,7 +43,7 @@ class CustomerController extends Controller
         $data['js'] = array('addcustomer.js');
         return view('pages.addcustomer', $data);
 
-       
+
     }
 
     /**
@@ -54,7 +54,7 @@ class CustomerController extends Controller
      */
     public function store($id)
     {
-        
+
     }
 
     /**
@@ -66,8 +66,8 @@ class CustomerController extends Controller
     public function show($id)
     {
         $customer = DB::table('member_details')->where('id',$id)->first();
-        $rateofint = DB::table('sub_sceme')->where('id',$id)->first();
-        // $rateofint = DB::table('sub_sceme')->where('id',$customer->sub_sceme_id)->first();
+        $rateofint = DB::table('sub_scheme')->where('id',3)->first();
+        // $rateofint = DB::table('sub_scheme')->where('id',$customer->sub_scheme_id)->first();
       //  print_r($rateofint); exit;
         $age = Carbon::parse($customer->DOB)->diff(Carbon::now())->format('%y years');
         $data['customerId'] = $id;
@@ -75,7 +75,7 @@ class CustomerController extends Controller
         $data['css'] = array();
         $data['pluginjs'] = array();
         $data['pagetitle'] = " Id: $customer->id |  Name: $customer->first_name $customer->middle_name $customer->last_name |  Bank Account: $customer->bank_account | Age: $age";
-        $data['js'] = array('addscemeyojna.js','customertransactionfb.js','customertransactionloan.js','fd.js');
+        $data['js'] = array('addschemeyojna.js','customertransactionfb.js','customertransactionloan.js','fd.js');
         $data['customer']="$customer->bank_account";
         $data['rateofint']="$rateofint->rate_of_int";
         return view('pages.yojna', $data);
@@ -134,5 +134,5 @@ class CustomerController extends Controller
     }
 
 
-    
+
 }

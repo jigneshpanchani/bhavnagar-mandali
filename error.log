@@ -1,0 +1,2 @@
+README.md
+git add access.log app/ artisan backup.zip bootstrap/ composer.json composer.lock config/ database/ error.log package-lock.json package.json phpunit.xml postcss.config.js public/ resources/ routes/ server.php storage/ tailwind.config.js tests/ webpack.mix.js

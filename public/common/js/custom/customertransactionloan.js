@@ -48,8 +48,10 @@ $(document).ready(function () {
                 field: "start_date",
                 editor: "DatePicker",
                 label: "Start Date:",
-
-                validation: { required: true }
+                validation: { required: true },
+                editorOptions: {
+                    change: onChangeStartDate,
+                }
             },
             {
                 field: "maturity_date",
@@ -108,6 +110,17 @@ $(document).ready(function () {
         },
     });
 
+    function onChangeStartDate(){
+       var start_date = $(document).find('#customerTransactionLoanModal').find("#start_date").val();
+       var loan_duration = $(document).find('#customerTransactionLoanModal').find("#loan_duration").val();
+       var dt = new Date(start_date);
+       var date = dt.getDate();
+       var month = dt.getMonth() + 1;
+       var year = dt.getFullYear()+ parseInt(loan_duration);
+       var finishDate = month +'/'+date+'/'+year;
+       $(document).find('#customerTransactionLoanModal').find('#maturity_date').val(finishDate);
+    }
+
     function saveModalData(formId = '', type = '', modalId = '') {
         let serializeArr = $(document).find("#" + modalId).find('input[name], select[name], textarea[name]').serializeArray();
         let dataArr = {}
@@ -121,6 +134,8 @@ $(document).ready(function () {
             data: { 'action': 'Save_customertransactionloan', 'data': dataArr },
             success: function (response) {
                 $(document).find('#' + modalId).getKendoWindow().close();
+                $('#yojnaList').data('kendoGrid').refresh();
+                $('#yojnaList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);
             }
         });
@@ -171,8 +186,9 @@ $(document).ready(function () {
 			var I = (ratOfint / 100) / 12;
 			var v = Math.pow((1 + I), N);
 			var t = (I * v) / (v - 1);
-			var result = loanAmount * t;
+			var result = Math.ceil(loanAmount * t);
             $('#installment_amount').val(result)
         }
     }
 });
+

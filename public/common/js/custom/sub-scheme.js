@@ -134,7 +134,6 @@ $(document).ready(function(){
             ev.preventDefault();
            // return false;
         }
-
     });
 
     function getDropdownDataSource(api_url, postArr = []) {

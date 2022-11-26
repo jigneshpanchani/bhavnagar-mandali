@@ -13,14 +13,11 @@ class ReportsApiController extends Controller
     use ResponseTrait;
 
     public function __construct(
-
         TransactionDetails    $reportsModal
-
     ){
+        $this->reportsModal  = new Repository($reportsModal);
+    }
 
-            $this->reportsModal          = new Repository($reportsModal);
-    }  
-    
     public function getReportsData(Request $request)
     {
         $data['data'] = $this->reportsModal->getreportsData($request);

@@ -132,18 +132,23 @@ class CustomerTransactionApiController extends Controller
         $data['opening_balance'] = 0;
         $data['closed'] = 0;
         $data['current_balance'] = 0;
-        $data = $this->customertransactionModal->create($data);
+        $saveFdData = $this->customertransactionModal->create($data);
+        if($saveFdData){
+            $result = ['status' => 'success', 'message' => 'Customer Fd Created Sucessfully'];
+            echo json_encode($result); exit;
+        }
     }
 
     public function SaveVyavahar($data)
     {
-        //dd($data); exit();
+
         $getTrans = TransactionDetails::where('id',$data['transaction_id'])->first();
         $updateVyavhar = $this->updateVyavhar($getTrans,$data);
         if($updateVyavhar){
             $data['date'] = date('Y-m-d', strtotime($data['date']));
             if($data['pay_receive'] == 'Pay'){
                 $rate = $getTrans->intrest_rate;
+                // dd($data); exit();
                 $emi = $data['amount'];
                 $remainingAmount = $getTrans->current_pending_due;
 
@@ -224,7 +229,7 @@ class CustomerTransactionApiController extends Controller
         $data['closed'] = 0;
 
         $createcustomertransaction = $this->customertransactionModal->create($data);
-        $result = ['status' => 'success', 'message' => 'customertransactionModal Created Sucessfully'];
+        $result = ['status' => 'success', 'message' => 'Customer Transaction Created Sucessfully'];
 
         echo json_encode($result);
         exit;
@@ -244,6 +249,7 @@ class CustomerTransactionApiController extends Controller
         $transaction['current_balance'] = 0;
         $transaction['current_intrest_due'] = 0;
         $transaction['current_pending_due'] = $data['loan_fd_amount'];
+        $transaction['loan_duration'] = $data['loan_duration'];
         $transaction['current_oc_due'] = 0;
         $transaction['opening_balance'] = 0;
         $transaction['closed'] = 0;
@@ -264,7 +270,7 @@ class CustomerTransactionApiController extends Controller
         $loanSecurity['oprated_by'] = $data['oprated_by'];
 
         $createcustomerloan = $this->customerLoanSecurityModal->create($loanSecurity);
-        $result = ['status' => 'success', 'message' => 'customertransactionModal Created Sucessfully'];
+        $result = ['status' => 'success', 'message' => 'Customer Loan Created Sucessfully'];
 
         echo json_encode($result); exit;
     }

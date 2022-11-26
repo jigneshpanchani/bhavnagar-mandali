@@ -10,5 +10,16 @@
     </div>
 </div>
 
-<div id='reportsList'></div>
+<div class="flex flex-col space-y-6">
+    <div class="bg-white px-6 rounded flex">
+        <form id="reportsFilterForm" class="flex w-full">
+        </form>
+    </div>
+    <div class="bg-white p-1 rounded flex">
+        <div id='reportsList'>
+        </div>
+    </div>
+</div>
+
+
 @endsection

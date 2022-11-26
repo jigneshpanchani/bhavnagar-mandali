@@ -402,14 +402,15 @@ input:checked + .slider .off {
 
 /* input box */
 
-.k-textbox , .k-numerictextbox{
-    border-width: 1px;
-    border-radius: 0.5rem;
-    height: 2.25rem;
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219/var(--tw-border-opacity));
-    box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
-}
+/* .k-textbox , .k-numerictextbox{
+    padding: 5px 0px;
+    line-height: 24px !important;
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px rgb(0 0 0 / 5%);
+    border-radius: 4px;
+    width: 100%;
+} */
 
 [type='text']:focus {
     border-color: #2ea2f8!important;
@@ -423,9 +424,9 @@ input:checked + .slider .off {
     display: none;
 }
 
-.k-invalid {
+/* .k-invalid {
     border: 1px solid red;
-}
+} */
 
 .k-label.k-form-label {
     color: #374151;
@@ -470,7 +471,7 @@ input:checked + .slider .off {
     box-shadow: none;
     color: #354052 !important;
 }
- 
+
 .k-notification {
     padding: 0px !important;
     border-radius: 8px !important;
@@ -492,6 +493,64 @@ input:checked + .slider .off {
 #example .demo-section {
     max-width: 600px;
     width: 600px;
+}
+
+#reportsFilterForm .k-form-layout{
+    width: 100% !important;
+}
+.k-widget.k-dropdown .k-dropdown-wrap{
+    padding: 5px 0px;
+    line-height: 24px !important;
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px rgb(0 0 0 / 5%);
+    border-radius: 4px;
+    width: 100%;
+}
+
+.k-list-optionlabel.k-state-selected, .k-list-optionlabel {
+    display: none;
+}
+
+.k-popup .k-list .k-state-hover {
+    background-color: #5ca5ff !important;
+    cursor: pointer !important;
+    color: white !important;
+}
+
+.k-dropdown-wrap .k-select {
+    line-height: 35px !important;
+    width: 35px!important;
+}
+
+.k-widget  .k-invalid-msg {
+    display: none;
+}
+
+/* DatePicker */
+
+.k-form-field-wrap .k-datepicker{
+    background: #FFFFFF;
+    border: 1px solid #D1D5DB;
+    box-shadow: 0px 1px 2px rgb(0 0 0 / 5%);
+    border-radius: 4px;
+    width: 100%;
+}
+
+.k-picker-wrap .k-input[type=text] {
+    border-radius: 10px;
+    height: 36px !important;
+}
+
+/* .k-widget.k-dropdown .k-dropdown-wrap.k-invalid {
+    border: 1px solid red;
+} */
+
+.k-label.k-form-label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 /* .k-dialog-titlebar {

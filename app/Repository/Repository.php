@@ -329,6 +329,7 @@ class Repository
     public function getreportsData($request, $countOnly=false){
 
         $post = ($request->input()) ? $request->input() : [];
+        $customFilterParts = (isset($post['filter']) && isset($post['filter']['filters'])) ? $post['filter']['filters'] : [];
 
         $columnArr = array(
             'td.id',
@@ -337,25 +338,44 @@ class Repository
             DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
             'td.loan_fd_amount',
             'td.current_pending_due',
+            'td.current_balance',
         );
 
         $columns = array(
-            'id'                    =>'id',
-            'account_no'            =>'account_no',
-            'sub_scheme_name'        =>'sub_scheme_name',
-            'customer_name'         =>DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
-            'loan_fd_amount'        =>'loan_fd_amount',
-            'current_pending_due'   =>'current_pending_due',
+            'id'                    =>'td.id',
+            'account_no'            =>'td.account_no',
+            'sub_scheme_name'       =>'sub_scheme.name as sub_scheme_name',
+            'customer_name'         => DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
+            'loan_fd_amount'        =>'td.loan_fd_amount',
+            'current_pending_due'   =>'td.current_pending_due',
+            'current_balance'   =>'td.current_balance',
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
                 ->leftjoin('sub_scheme', 'sub_scheme.id', '=', 'td.sub_scheme_id')
                 ->leftjoin('member_details', 'member_details.id', '=', 'td.member_id')
-                ->where('td.loan_fd_amount', '!=' , '0')
-                ->where('td.current_pending_due', '!=' , '0')
+                ->leftjoin('scheme', 'scheme.id', '=', 'sub_scheme.scheme_id')
+                // ->where('td.loan_fd_amount', '!=' , '0')
+                // ->where('td.current_pending_due', '!=' , '0')
                 ->select($columnArr);
 
         $this->gridDataFilter($query, $post, $columns);
+        foreach ($customFilterParts as $filter) {
+            if($filter['field'] == 'extra' && isset($filter['value'])){
+                 /* grid wise custom filter apply here */
+                $query->where(function ($childQuery) use ($filter, $columns) {
+                    foreach ($filter['value'] as $fieldName => $fieldvalue) {
+                        if ($fieldName == 'branch_name' && $fieldvalue != '') {
+                            $childQuery->where('member_details.branch_name', $fieldvalue);
+                        } elseif ($fieldName == 'scheme' && $fieldvalue != '') {
+                            $childQuery->where('sub_scheme.scheme_id', $fieldvalue);
+                        } elseif ($fieldName == 'sub_scheme_id' && $fieldvalue != '') {
+                            $childQuery->where('td.sub_scheme_id', $fieldvalue);
+                        }
+                    }
+                });
+            }
+        }
 
         $this->gridDataSorting($query, $post);
 

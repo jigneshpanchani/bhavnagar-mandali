@@ -84,7 +84,7 @@ $(document).ready(function () {
             },100);
         }
 
-        if (dataArr.sub_scheme_id == 2 || dataArr.sub_scheme_id == 3 || dataArr.sub_scheme_id == 4) {
+        if (dataArr.sub_scheme_id == 2 || dataArr.sub_scheme_id == 3 || dataArr.sub_scheme_id == 4 || dataArr.sub_scheme_id == 5) {
             $(document).find('#customerTransactionLoanModal').find("#account_no").val(accountNo);
             $(document).find('#customerTransactionLoanModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerTransactionLoanModal').find("#member_id").val(member_id);

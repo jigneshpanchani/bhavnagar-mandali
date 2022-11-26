@@ -7,7 +7,6 @@ $(document).ready(function () {
     });
 
     $("body").on("click", ".customerfd", function () {
-
         kendowindowOpen("#customerFdModal");
     });
 
@@ -56,7 +55,6 @@ $(document).ready(function () {
                         '</div>',
 
         submit: function (ev) {
-
             saveModalData('customerFdform', 'save_fd', 'customerFdModal');
             ev.preventDefault();
 
@@ -77,6 +75,8 @@ $(document).ready(function () {
             data: { 'action': type, 'data': dataArr },
             success: function (response) {
                 $(document).find('#' + modalId).getKendoWindow().close();
+                $('#yojnaList').data('kendoGrid').refresh();
+                $('#yojnaList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);
             }
         });

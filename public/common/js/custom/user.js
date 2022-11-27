@@ -6,10 +6,10 @@ $(document).ready(function(){
         }
     });
 
-    // $("#loader").kendoLoader();
-    // kendo.ui.progress.messages = {
-    //     loading: '<div class="vue-simple-spinner animate-spin" style="position:absolute;top:50%;left:50%;transfrom:translate(-50%,-50%); margin: 0px auto; border-radius: 100%; border-color: rgb(50, 157, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-style: solid; border-width: 3px; border-image: none 100% / 1 / 0 stretch; width: 90px; height: 90px;"></div>'
-    // };
+    $("#loader").kendoLoader();
+    kendo.ui.progress.messages = {
+        loading: '<div class="vue-simple-spinner animate-spin" style="position:absolute;top:50%;left:50%;transfrom:translate(-50%,-50%); margin: 0px auto; border-radius: 100%; border-color: rgb(50, 157, 243) rgb(238, 238, 238) rgb(238, 238, 238); border-style: solid; border-width: 3px; border-image: none 100% / 1 / 0 stretch; width: 90px; height: 90px;"></div>'
+    };
 
     $("#userList").kendoGrid({
         dataSource: customDataSource(
@@ -18,7 +18,7 @@ $(document).ready(function(){
                 name:  { type: "string" },
                 email: { type: "string" }
             },
-            
+
         ),
         pageable: customPageableArr(),
         dataBound: function(e) {
@@ -125,7 +125,7 @@ $(document).ready(function(){
                     .kendoTextBox();
                     },
             }
-                   
+
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
@@ -141,13 +141,6 @@ $(document).ready(function(){
     });
 
     $("#editUserForm").kendoForm({
-        // dataSource: customDataSource(
-        //     "api/user-data",{
-        //         name:     {type: "string"},
-        //         email:    {type: "string"},
-        //         password: {type: "string"},
-        //     }
-        // ),
         formData: {
             name: "",
             email: "",
@@ -157,7 +150,6 @@ $(document).ready(function(){
         items: [
             { field: "name", label: "Name:", validation: { required: { message: "Enter User Name" } } },
             { field: "email", label: "Email:", validation: { required: { message: "Enter User Email" }, email: true  } },
-            // { field: "password", label: "Password:", validation: { required: { message: "Enter User Password" } }},
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
@@ -174,9 +166,9 @@ $(document).ready(function(){
     });
 
     $("body").on("click", ".editUser", function(){
+        kendo.ui.progress($(document.body), true);
         let primaryID = $(this).attr('data-id');
         if (primaryID > 0) {
-            kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
                 url: site_url + "api/get-user-details",

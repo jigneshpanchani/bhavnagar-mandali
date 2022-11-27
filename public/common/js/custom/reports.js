@@ -32,6 +32,11 @@ $(document).ready(function(){
                 title: "CUSTOMER NAME"
             },
             {
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: branch_name #</div>",
+                field: "branch_name",
+                title: "BRANCH"
+            },
+            {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
                 field: "sub_scheme_name",
                 title: "TYPE OF TRANSACTION"

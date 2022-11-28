@@ -69,8 +69,11 @@ class CustomerApiController extends Controller
                 $this->saveCustomer($data);
                 break;
             case 'updateStatus':
+
                 $this->customerModal->update($data,$data['id']);
-                $this->transactionDetailsModal->update($data,$data['id']);
+                // if(isset($data['payment_receiver_name']) && isset($data['check_number']) && isset($data['payment_type'])){
+                //     $this->transactionDetailsModal->update($data,$data['id']);
+                // }
                 $result = ['status'=>'success', 'message'=>'Customer ' .$data["status"]. ' Sucessfully'];
                 echo json_encode($result);exit;
                 break;

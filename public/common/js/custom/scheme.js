@@ -14,7 +14,7 @@ $(document).ready(function(){
     $("#schemeList").kendoGrid({
         dataSource: customDataSource(
             "api/scheme-data", {
-                id: { type: "integer" },
+                id: { type: "string" },
                 name:  { type: "string" },
                 created_by: { type: "string" },
                 updated_by: {type: "string"}
@@ -55,7 +55,7 @@ $(document).ready(function(){
                     return manageAction(dataItem.id);
                 },
                 field: "action",
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
         ],

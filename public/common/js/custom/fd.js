@@ -6,44 +6,77 @@ $(document).ready(function () {
         }
     });
 
+    function customModal(title){
+        return {
+            title: title,
+            width: "40%",
+            actions: ["close"],
+            draggable: false,
+            resizable: false,
+            modal: true,
+            position: {
+                top: "10%",
+                left: "30%"
+            },
+            animation: {
+                close: {
+                    effects: "fade:out"
+                }
+            }
+
+        };
+    }
+
     $("body").on("click", ".customerfd", function () {
         kendowindowOpen("#customerFdModal");
     });
 
-    $("#customerFdModal").kendoWindow(modalopen('FD'));
+    $("#customerFdModal").kendoWindow(customModal('FD'));
 
     $("#customerFdform").kendoForm({
-
         orientation: "vertical",
-        items: [
+        items:
+        [
             {
-                field: "account_no",
-                label: "Account No",
-                validation: { required: true }
-            },
-            {
-                field: "start_date",
-                editor: "DatePicker",
-                label: "Start Date",
-                validation: { required: true}
-            },
-            {
-                field: "maturity_date",
-                editor: "DatePicker",
-                label: "Maturity Date",
-                validation: { required: true}
-            },
-            {
-                field: "intrest_rate",
-                label: "Intrest Rate",
-                validation: { required: true}
-            },
-            {
-                field: "loan_fd_amount",
-                label: "FD Amount",
-                validation: { required: true}
-            },
+            type: "group",
+            layout: "grid",
+            grid: { cols: 4, gutter: 10 },
+            items: [
+                {
+                    field: "account_no",
+                    label: "Account No",
+                    colSpan: 4,
+                    validation: { required: true }
+                },
+                {
+                    field: "start_date",
+                    editor: "DatePicker",
+                    label: "Start Date",
+                    colSpan: 2,
+                    validation: { required: true}
+                },
+                {
+                    field: "maturity_date",
+                    editor: "DatePicker",
+                    label: "Maturity Date",
+                    colSpan: 2,
+                    validation: { required: true}
+                },
+                {
+                    field: "intrest_rate",
+                    label: "Intrest Rate",
+                    colSpan: 4,
+                    validation: { required: true}
+                },
+                {
+                    field: "loan_fd_amount",
+                    label: "FD Amount",
+                    colSpan: 4,
+                    validation: { required: true}
+                },
 
+            ],
+            },
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                         '<div class="float-right flex space-x-4 items-center justify-end">\n' +

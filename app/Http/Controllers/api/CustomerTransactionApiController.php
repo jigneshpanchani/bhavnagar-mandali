@@ -43,12 +43,12 @@ class CustomerTransactionApiController extends Controller
         return $this->successResponse('Data found successfully', 'data', $data);
     }
 
-    public function getCustomertransactionloanData(Request $request)
-    {
-        $data['data'] = $this->customertransactionModal->getCustomertransactionloanData($request);
-        $data['total'] = $this->customertransactionModal->getCustomertransactionloanData($request, true);
-        return $this->successResponse('Data found successfully', 'data', $data);
-    }
+    // public function getCustomertransactionloanData(Request $request)
+    // {
+    //     $data['data'] = $this->customertransactionModal->getCustomertransactionloanData($request);
+    //     $data['total'] = $this->customertransactionModal->getCustomertransactionloanData($request, true);
+    //     return $this->successResponse('Data found successfully', 'data', $data);
+    // }
 
     public function getVyavaharData(Request $request)
     {

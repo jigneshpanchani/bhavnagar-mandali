@@ -213,7 +213,6 @@ $(document).ready(function () {
                         editorOptions: {
                             items: ["Cash", "Check"],
                             layout: "horizontal",
-                            labelPosition: "before"
                         },
                         colSpan: 2,
                         validation: { required: true },

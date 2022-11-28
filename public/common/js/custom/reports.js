@@ -5,6 +5,7 @@ $(document).ready(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
     $("#reportsList").kendoGrid({
         dataSource: customDataSource(
             "api/reports-data", {
@@ -103,7 +104,7 @@ $(document).ready(function(){
             {
                 field: "sub_scheme_id",
                 editor: "DropDownList",
-                label: "Select sub yojna",
+                label: "Select Sub Yojna",
                 editorOptions: { optionLabel: "Select..." },
                 colSpan: 2,
             },

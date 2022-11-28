@@ -28,7 +28,6 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
 Route::resource('users', 'UserController');
 
 Route::resource('division', 'DivisionController');
@@ -44,7 +43,6 @@ Route::resource('customertransaction', 'CustomerTransacionVyavharController');
 Route::resource('reports', 'ReportsController');
 
 Route::resource('vyaj-ganatri', 'VyajGanatriController');
-// Route::get('customer/customertransation/{id}', [\App\Http\Controllers\admin\CustomerTransacionVyavharController::class, 'customertransation']);
 
 
 

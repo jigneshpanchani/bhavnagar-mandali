@@ -16,10 +16,10 @@ $(document).ready(function(){
     $("#subschemeList").kendoGrid({
         dataSource: customDataSource(
             "api/sub-scheme-data", {
-                id: { type: "integer" },
+                id: { type: "string" },
                 scheme_id: {type: "string"},
                 name:  { type: "string" },
-                rate_of_int: { type: "integer"},
+                rate_of_int: { type: "string"},
                 created_by: { type: "string" },
                 updated_by: {type: "string"}
             },
@@ -42,17 +42,17 @@ $(document).ready(function(){
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: scheme_name #</div>",
                 field: "scheme_name",
-                title: "SCHEME NAME"
+                title: "SCHEME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
                 field: "sub_scheme_name",
-                title: "SUB-SCHEME NAME"
+                title: "SUB-SCHEME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: rate_of_int #</div>",
                 field: "rate_of_int",
-                title: "Rate Of Interest"
+                title: "RATE OF INTEREST"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: createdBy #</div>",
@@ -69,7 +69,7 @@ $(document).ready(function(){
                     return manageAction(dataItem.id);
                 },
                 field: "action",
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
         ],

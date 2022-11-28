@@ -14,7 +14,7 @@ $(document).ready(function(){
     $("#userList").kendoGrid({
         dataSource: customDataSource(
             "api/users-data", {
-                id: { type: "integer" },
+                id:    { type: "string" },
                 name:  { type: "string" },
                 email: { type: "string" }
             },
@@ -43,14 +43,14 @@ $(document).ready(function(){
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: email #</div>",
                 field: "email",
-                title: "Email"
+                title: "EMAIL"
             },
             {
                 template: function(dataItem) {
                     return manageAction(dataItem.id);
                 },
                 field: "action",
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
         ],

@@ -104,4 +104,33 @@ trait CommonTrait {
         return $result;
     }
 
+    public function convertFilterValue($filterOperator, $filterValue){
+        //Do some value manupulations for some kendo operators
+        switch ($filterOperator) {
+            case 'startswith':
+                $value = $filterValue . '%';
+                break;
+            case 'endswith':
+                $value = '%' . $filterValue;
+                break;
+            case 'contains':
+            case 'doesnotcontain':
+                $value = '%' . $filterValue . '%';
+                break;
+            case 'isnull':
+            case 'isnotnull':
+                $value = null;
+                break;
+            case 'isempty':
+            case 'isnotempty':
+                $value = '';
+                break;
+            default:
+                $value = $filterValue;
+                break;
+
+        }
+        return $value;
+    }
+
 }

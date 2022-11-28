@@ -1,7 +1,4 @@
-    //const { extendWith } = require("lodash");
-
-    $(document).ready(function(){
-
+$(document).ready(function(){
 
     $.ajaxSetup({
         headers: {
@@ -9,10 +6,9 @@
         }
     });
 
-        var customer = JSON.parse($('#customerdata').val());
-
-        var member =JSON.parse($('#memberdata').val());
-      $("#editCustomerForm").kendoForm({
+    var customer = JSON.parse($('#customerdata').val());
+    var member =JSON.parse($('#memberdata').val());
+    $("#editCustomerForm").kendoForm({
         formData: {
                 id : customer[0].id,
                 first_name : customer[0].first_name ,
@@ -241,7 +237,7 @@
                             editorOptions: {
                                 items: ["Cash", "Check"],
                                 layout: "horizontal",
-                                labelPosition: "before"
+                                // labelPosition: "before"
                             },
                             colSpan: 2,
                             validation: { required: true },
@@ -269,7 +265,7 @@
 
             buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
-                                '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn data-type-id="customerModal" type="button">Cancel</button>\n' +
+                                '<button type="button" class="btn btn-outline-secondary backToCustomer font-weight-bold btn-sm cancel-btn data-type-id="customerModal" type="button">Cancel</button>\n' +
                                 '<input type="hidden" id="editId" name="id">\n' +
                                 '<button type="submit" class="btn btn-primary font-weight-bold btn-sm" type="submit">Edit Customer</button>\n' +
                             '</div>\n' +
@@ -302,49 +298,26 @@
 
             return false;
             },
-        });
+    });
 
-        // function saveModalData(formId = '', type = '', modalId = '') {
-        //     let serializeArr = $(document).find("#" + modalId).find('input[name], select[name], textarea[name]').serializeArray();
-        //     let dataArr = {}
-        //     $(serializeArr).each(function (i, field) {
-        //         dataArr[field.name] = field.value;
-        //     });
-        //     console.log(dataArr);
-        //     $.ajax({
-        //         type: "POST",
-        //         url: site_url + "api/customer/ajaxAction",
-        //         dataType: "json",
-        //         data: { 'action': 'save_customer', 'data': dataArr },
-        //         success: function (response) {
-        //             window.location.href = "/customer";
-        //         }
-        //     });
-        // }
+    $("body").on("click", ".backToCustomer", function () {
+        window.location.href = "/customer";
+    });
 
-        function getDropdownDataSource(api_url, postArr = []) {
-            return {
-                schema: {
-                    data: 'data'
-                },
-                transport: {
-                    read: {
-                        url: site_url + "api/" + api_url,
-                        dataType: 'json',
-                        type: 'POST',
-                        data: postArr
-                    }
+    function getDropdownDataSource(api_url, postArr = []) {
+        return {
+            schema: {
+                data: 'data'
+            },
+            transport: {
+                read: {
+                    url: site_url + "api/" + api_url,
+                    dataType: 'json',
+                    type: 'POST',
+                    data: postArr
                 }
             }
         }
-
-        function setDropdownList(fieldID, api_url, postArr = {}) {
-        $("#" + fieldID).kendoDropDownList({
-            autoWidth: true,
-            // dataTextField: "text",
-            dataValueField: "value",
-            dataSource: getDropdownDataSource(api_url, postArr),
-        });
     }
 
  });

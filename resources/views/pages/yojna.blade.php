@@ -7,10 +7,9 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ (@$pagetitle) ? $pagetitle : 'Static' }}</h5>
         </div>
-                <input type="hidden" value="{{ $customer }}" name="accountno" id="accountNo">
-                <input type ="hidden" value="{{$rateofint}}" name="rateofint" id="rateogInt">
-                {{-- <input type="hidden" name="loanName" id="loanName"> --}}
-                <button class="addyojna btn btn-primary font-weight-bolder btn-sm justify-end">Add Yojna</button>
+            <input type="hidden" value="{{ $customer }}" name="accountno" id="accountNo">
+            <input type ="hidden" value="{{$rateofint}}" name="rateofint" id="rateogInt">
+        <button class="addyojna btn btn-primary font-weight-bolder btn-sm justify-end">Add Yojna</button>
     </div>
 </div>
 
@@ -44,11 +43,11 @@
 
 <div id="vyavaharModal" style="display:none;">
     <form id="vyavaharForm"></form>
-</div> 
+</div>
 
 <div id="transactiondetailModal" style="display:none;">
     <div id="transactiondetailList"></div>
-</div> 
+</div>
 
 <script>
     var member_id = "<?php echo $customerId ?>";

@@ -7,7 +7,7 @@ $(document).ready(function(){
     });
     $("#vyajGanatriList").kendoGrid({
         dataSource: customDataSource(
-            "api/reports-data", {
+            "api/loan-transaction-data", {
             },
 
         ),
@@ -41,6 +41,11 @@ $(document).ready(function(){
                 field: "loan_fd_amount",
                 title: "LOAN AMOUNT"
             },
+            {
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: current_pending_due #</div>",
+                field: "current_pending_due",
+                title: "CURRENT PENDING DUE"
+            },
         ],
         noRecords: noRecordTemplate()
     });
@@ -52,7 +57,28 @@ $(document).ready(function(){
         kendowindowOpen("#vyajGanatriModal");
     });
 
-    $("#vyajGanatriModal").kendoWindow(modalopen('Vyaj Ganatri Calculator'));
+    function customModal(title){
+        return {
+            title: title,
+            width: "40%",
+            actions: ["close"],
+            draggable: false,
+            resizable: false,
+            modal: true,
+            position: {
+                top: "10%",
+                left: "30%"
+            },
+            animation: {
+                close: {
+                    effects: "fade:out"
+                }
+            }
+
+        };
+    }
+
+    $("#vyajGanatriModal").kendoWindow(customModal('Vyaj Ganatri Calculator'));
 
     $("#vyajGanatriForm").kendoForm({
         orientation: "vertical",
@@ -84,8 +110,8 @@ $(document).ready(function(){
                         dataSource: getDropdownDataSource('get-scheme-name', {}),
                         dataValueField: "Id",
                         dataTextField: "Name",
-                        validation: { required: { message: "Select Scheme" } }
                     },
+                    validation: { required: { message: "Select Scheme" } }
                 },
                 {
                     field: "sub_scheme_id",
@@ -132,18 +158,21 @@ $(document).ready(function(){
                         ],
                         change: onChangeCountingtDate,
                     },
+                    validation: { required: { message: "Select Counting" } }
                 },
                 {
                     field: "start_date",
                     editor: "DatePicker",
                     label: "Start Date",
                     colSpan: 2,
+                    validation: { required: true }
                 },
                 {
                     field: "end_date",
                     editor: "DatePicker",
                     label: "End Date",
                     colSpan: 2,
+                    validation: { required: true }
                 },
             ],
             },
@@ -151,7 +180,6 @@ $(document).ready(function(){
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
                             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
                                 '<button class="btn btn-primary font-weight-bold btn-sm" type="submit">Start Calculation</button>\n' +
-                                '<button type="button" class="btn btn-primary font-weight-bold btn-sm">Start-Re-Calculation</button>\n' +
                             '</div>\n' +
                         '</div>',
         submit: function (ev) {
@@ -173,6 +201,8 @@ $(document).ready(function(){
             dataType: "json",
             data: { 'action': type , 'data': dataArr },
             success: function (response) {
+                $(document).find('#'+modalId).getKendoWindow().close();
+                notificationDisplay(response.message, '', response.status);
             }
         });
     }
@@ -191,16 +221,15 @@ $(document).ready(function(){
     }
 
     function onChangeCountingtDate(e){
-
         var date = new Date();
         var firstDay = new Date(date.getFullYear(), e.sender.value() -1);
         var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth() + 1, 0);
         var startDate = (firstDay.getMonth()+1)+'/'+firstDay.getDate()+'/'+firstDay.getFullYear();
         var endDate = (lastDay.getMonth()+1)+'/'+lastDay.getDate()+'/'+lastDay.getFullYear();
         $(document).find('#vyajGanatriModal').find('#start_date').val(startDate);
-        $("#start_date").data("kendoDatePicker").enable(false);
+        // $("#start_date").data("kendoDatePicker").enable(false);
         $(document).find('#vyajGanatriModal').find('#end_date').val(endDate);
-        $("#end_date").data("kendoDatePicker").enable(false);;
+        // $("#end_date").data("kendoDatePicker").enable(false);
     }
 
     function getDropdownDataSource(api_url, postArr = []) {

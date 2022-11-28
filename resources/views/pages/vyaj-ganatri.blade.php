@@ -11,7 +11,11 @@
     </div>
 </div>
 
-<div id='vyajGanatriList'></div>
+<div class="bg-white p-1 rounded flex">
+    <div id='vyajGanatriList'>
+    </div>
+</div>
+
 
 <div id="vyajGanatriModal" style="display:none;">
     <form id="vyajGanatriForm">

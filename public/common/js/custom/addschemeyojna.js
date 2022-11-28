@@ -251,7 +251,7 @@ $(document).ready(function () {
                 },
                 field: "action",
                 width: 100,
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
         ],
@@ -283,7 +283,28 @@ $(document).ready(function () {
 
     // Vyavahar
 
-    $("#vyavaharModal").kendoWindow(modalopen('Vyavahar'));
+    function customModal(title){
+        return {
+            title: title,
+            width: "40%",
+            actions: ["close"],
+            draggable: false,
+            resizable: false,
+            modal: true,
+            position: {
+                top: "10%",
+                left: "30%"
+            },
+            animation: {
+                close: {
+                    effects: "fade:out"
+                }
+            }
+
+        };
+    }
+
+    $("#vyavaharModal").kendoWindow(customModal('Vyavahar'));
 
     var accountNo = $("#accountNo").val();
     var todayDate = kendo.toString(kendo.parseDate(new Date()), 'MM/dd/yyyy');
@@ -299,60 +320,74 @@ $(document).ready(function () {
 
     $("#vyavaharForm").kendoForm({
         orientation: "vertical",
-        items: [
+        items:
+        [
             {
-                field: "account_no",
-                label: "Account No:",
-                validation: { required: true }
-            },
-            {
-                field: "date",
-                editor: "DatePicker",
-                label: "Date:",
-                validation: { required: true }
-            },
-            {
-                field: "pay_through",
-                editor: "DropDownList",
-                label: "Pay Through:",
-                editorOptions: {
-                    optionLabel: "Select...",
-                    dataTextField: "text",
-                    dataValueField: "value", //Id
-                    dataSource: [
-                        { text: "IDBI", value: "IDBI" },
-                        { text: "Cash", value: "Cash" },
-                        { text: "Check", value: "Check"},
-                        { text: "Bhavnagar District Bank Saving Account", value: "Bhavnagar District Bank Saving Account" },
-                        { text: "Bhavnagar District Bank Current Account", value: "Bhavnagar District Bank Current Account" },
-                        { text: "Bhavnagar District Bank Rowsakh", value: "Bhavnagar District Bank Rowsakh" },
-                        { text: "Saurashtra Gramin Bank Saving", value: "Saurashtra Gramin Bank Saving" },
-                        { text: "Saurashtra Gramin Bank Over-Draft account", value: "Saurashtra Gramin Bank Over-Draft account" },
-                    ]
-                },
-                validation: { required: true}
-            },
-            {
-                field: "pay_receive",
-                editor: "RadioGroup",
-                label: "Pay Receive:",
-                editorOptions: {
-                    items: ["Pay", "Receive"],
-                    layout: "horizontal",
-                    labelPosition: "before"
-                },
-                validation: { required: true}
-            },
-            {
-                field: "amount",
-                label: "Amount:",
-                validation: { required: true }
-            },
-            {
-                field: "check_no",
-                label: "Check No:",
-            },
+            type: "group",
+            layout: "grid",
+            grid: { cols: 4, gutter: 10 },
+                items: [
+                    {
+                        field: "account_no",
+                        label: "Account No:",
+                        colSpan: 4,
+                        validation: { required: true }
+                    },
+                    {
+                        field: "pay_through",
+                        editor: "DropDownList",
+                        label: "Pay Through:",
+                        colSpan: 4,
+                        editorOptions: {
+                            optionLabel: "Select...",
+                            dataTextField: "text",
+                            dataValueField: "value", //Id
+                            dataSource: [
+                                { text: "IDBI", value: "IDBI" },
+                                { text: "Cash", value: "Cash" },
+                                { text: "Check", value: "Check"},
+                                { text: "Bhavnagar District Bank Saving Account", value: "Bhavnagar District Bank Saving Account" },
+                                { text: "Bhavnagar District Bank Current Account", value: "Bhavnagar District Bank Current Account" },
+                                { text: "Bhavnagar District Bank Rowsakh", value: "Bhavnagar District Bank Rowsakh" },
+                                { text: "Saurashtra Gramin Bank Saving", value: "Saurashtra Gramin Bank Saving" },
+                                { text: "Saurashtra Gramin Bank Over-Draft account", value: "Saurashtra Gramin Bank Over-Draft account" },
+                            ]
+                        },
+                        validation: { required: true}
+                    },
+                    {
+                        field: "date",
+                        editor: "DatePicker",
+                        label: "Date:",
+                        colSpan: 2,
+                        validation: { required: true }
+                    },
+                    {
+                        field: "pay_receive",
+                        editor: "RadioGroup",
+                        label: "Pay Receive:",
+                        colSpan: 2,
+                        editorOptions: {
+                            items: ["Pay", "Receive"],
+                            layout: "horizontal",
+                            // labelPosition: "before"
+                        },
+                        validation: { required: true}
+                    },
+                    {
+                        field: "amount",
+                        label: "Amount:",
+                        colSpan: 2,
+                        validation: { required: true }
+                    },
+                    {
+                        field: "check_no",
+                        label: "Check No:",
+                        colSpan: 2,
+                    },
 
+                ],
+            },
         ],
         buttonsTemplate: '<div class="w-full inline-flex space-x-4 items-center justify-end py-2">\n' +
             '<div class="float-right flex space-x-4 items-center justify-end">\n' +
@@ -370,7 +405,7 @@ $(document).ready(function () {
     });
 
     function saveModalData(formId='', type='' ,modalId=''){
-        // kendo.ui.progress($(document.body), true);
+        kendo.ui.progress($(document.body), true);
         let serializeArr = $(document).find("#"+modalId).find('input[name], select[name], textarea[name]').serializeArray();
         let dataArr = {}
         $(serializeArr).each(function (i, field) {
@@ -382,7 +417,9 @@ $(document).ready(function () {
             dataType: "json",
             data: {'action': type, 'data': dataArr },
             success: function (response) {
-                // kendo.ui.progress($(document.body), false);
+                kendo.ui.progress($(document.body), false);
+                $('#yojnaList').data('kendoGrid').refresh();
+                $('#yojnaList').data('kendoGrid').dataSource.read();
                 $(document).find('#'+modalId).getKendoWindow().close();
                 notificationDisplay(response.message, '', response.status);
             }

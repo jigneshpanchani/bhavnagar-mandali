@@ -11,7 +11,7 @@
 </div>
 
 <div class="flex flex-col space-y-6">
-    <div class="bg-white px-6 rounded flex">
+    <div class="bg-white px-6 py-4 rounded flex">
         <form id="reportsFilterForm" class="flex w-full">
         </form>
     </div>

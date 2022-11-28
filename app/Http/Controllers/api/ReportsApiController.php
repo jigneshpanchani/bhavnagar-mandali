@@ -24,4 +24,11 @@ class ReportsApiController extends Controller
         $data['total'] = $this->reportsModal->getreportsData($request, true);
         return $this->successResponse('Data found successfully', 'data', $data);
     }
+
+    public function getLoanTransactionData(Request $request)
+    {
+        $data['data'] = $this->reportsModal->getLoanTransactionData($request);
+        $data['total'] = $this->reportsModal->getLoanTransactionData($request, true);
+        return $this->successResponse('Data found successfully', 'data', $data);
+    }
 }

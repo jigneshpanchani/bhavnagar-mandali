@@ -15,8 +15,8 @@ $(document).ready(function () {
     $("#divisionList").kendoGrid({
         dataSource: customDataSource(
             "api/division-data", {
-            id: { type: "integer" },
-            name: { type: "string" },
+            id:         { type: "string" },
+            name:       { type: "string" },
             created_by: { type: "string" },
             updated_by: { type: "string" }
         },
@@ -37,9 +37,9 @@ $(document).ready(function () {
                 title: "ID"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: name #</div>",
-                field: "name",
-                itle: "NAME"
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: division_name #</div>",
+                field: "division_name",
+                title: "NAME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: createdBy #</div>",
@@ -56,7 +56,7 @@ $(document).ready(function () {
                     return manageAction(dataItem.id);
                 },
                 field: "action",
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
         ],

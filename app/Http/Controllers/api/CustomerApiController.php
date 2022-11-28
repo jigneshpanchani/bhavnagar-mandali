@@ -162,38 +162,55 @@ class CustomerApiController extends Controller
 
     public function totalVyajCalculation($data){
 
-        $totalCustomerCount = TransactionDetails::where('sub_scheme_id', $data['sub_scheme_id'])->get();
 
-        for ($i=0;$i<count($totalCustomerCount->toArray()); $i++) {
 
-            $rate = $totalCustomerCount[$i]['intrest_rate'];
-            $emi = $totalCustomerCount[$i]['installment_amount'];
-            $remainingAmount = $totalCustomerCount[$i]['current_pending_due'];
-            $transaction_id = $totalCustomerCount[$i]['id'];
+    $totalCustomerCount = TransactionDetails::where('sub_scheme_id', $data['sub_scheme_id'])->get();
 
-            $interestAmount = ($rate/100/12) * $remainingAmount;
-            $principal = $emi - $interestAmount;
-            $remainingAmount = $remainingAmount - $principal;
+    $startDate =  date('Y-m-d', strtotime($data['start_date']));
+    $endDate =  date('Y-m-d', strtotime($data['end_date']));
+    $todayDate = date('Y-m-d', strtotime(date('Y-m-d')));
+        if(($todayDate >= $startDate) && ($todayDate <= $endDate)){
+            for ($i=0;$i<count($totalCustomerCount->toArray()); $i++) {
+                $isVyavhar =  vyavahar::from('vyavahar as v')
+                ->join('transaction_detail as td', 'td.id', '=' , 'v.transaction_id')
+                ->where('td.sub_scheme_id', $data['sub_scheme_id'])
+                ->where('v.amount', $totalCustomerCount[$i]['installment_amount'])
+                ->whereBetween('v.date',  [$startDate, $endDate])
+                ->get()->toArray();
 
-            $data['interest_paid'] = $interestAmount;
-            $data['principal_paid'] = $principal;
-            $data['remaining_amount'] = $remainingAmount;
-            $data['transaction_id'] = $transaction_id;
-            $data['date'] =  date('Y-m-d', strtotime(date('Y-m-d')));
-            $data['pay_through'] = 'Cash';
-            $data['pay_receive'] = 'Pay';
-            $data['amount'] = $totalCustomerCount[$i]['installment_amount'];
-            $saveVyavhar = $this->vyavaharModal->create($data);
+                if(isset($isVyavhar) && empty($isVyavhar)){
+                    $rate = $totalCustomerCount[$i]['intrest_rate'];
+                    $emi = $totalCustomerCount[$i]['installment_amount'];
+                    $remainingAmount = $totalCustomerCount[$i]['current_pending_due'];
+                    $transaction_id = $totalCustomerCount[$i]['id'];
 
-            if($saveVyavhar){
-                $updateData['current_pending_due'] = $remainingAmount;
-                // $updateData['current_balance'] = $amount;
-                // $updateData['opening_balance'] = $amount;
-                $updateBalance = $this->transactionDetailsModal->update($updateData, $transaction_id);
+                    $interestAmount = ($rate/100/12) * $remainingAmount;
+                    $principal = $emi - $interestAmount;
+                    $remainingAmount = $remainingAmount - $principal;
+                    $data['interest_paid'] = $interestAmount;
+                    $data['principal_paid'] = $principal;
+                    $data['remaining_amount'] = $remainingAmount;
+                    $data['transaction_id'] = $transaction_id;
+                    $data['date'] =  date('Y-m-d', strtotime(date('Y-m-d')));
+                    $data['pay_through'] = 'Cash';
+                    $data['pay_receive'] = 'Pay';
+                    $data['amount'] = $totalCustomerCount[$i]['installment_amount'];
+                    $saveVyavhar = $this->vyavaharModal->create($data);
+                    if($saveVyavhar){
+                        $updateData['current_pending_due'] = $remainingAmount;
+                        // $updateData['current_balance'] = $amount;
+                        // $updateData['opening_balance'] = $amount;
+                        $updateBalance = $this->transactionDetailsModal->update($updateData, $transaction_id);
+                        $result = ['status'=>'success', 'message'=>'Vyaj Calculated Sucessfully'];
+                    }
+                } else {
+                    $result = ['status'=>'error', 'message'=>'Vyaj Already Calculated'];
+                }
             }
-
+        } else {
+            $result = ['status'=>'error', 'message'=>'Current Date is Not Between StartDate And EndDate'];
         }
-        $result = ['status'=>'success', 'message'=>'Customer Created Sucessfully'];
+
         echo json_encode($result);exit;
 
     }
@@ -201,15 +218,3 @@ class CustomerApiController extends Controller
 
 
 }
-
-
-        //old
-        // $startDate = date('Y-m-d', strtotime($data['start_date']));
-        // $endDate = date('Y-m-d', strtotime($data['end_date']));
-
-        // $calculateTotalVyaj =  vyavahar::from('vyavahar as v')
-        //                                 ->join('transaction_detail as td', 'td.id', '=' , 'v.transaction_id')
-        //                                 ->where('td.sub_scheme_id', $data['sub_scheme_id'])
-        //                                 ->whereBetween('v.date',  [$startDate, $endDate])
-        //                                 ->sum('v.interest_paid');
-                                        // ->get()->toArray();

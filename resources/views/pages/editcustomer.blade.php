@@ -11,13 +11,11 @@
     </div>
 </div>
 
-<div class="bg-white w-full h-full rounded">
-    <div id="editcustomerModal" class="m-6">
+<div class="bg-white w-full h-full rounded p-6">
+    <div id="editcustomerModal">
         <form id="editCustomerForm">
         <input type="hidden" value="{{$customer}}" id ="customerdata">
-        <!-- {{  $customer }} -->
         <input type="hidden" value="{{$member}}" id ="memberdata">
-
         <input type="hidden" value="{{$id}}" name="id">
         </form>
     </div>

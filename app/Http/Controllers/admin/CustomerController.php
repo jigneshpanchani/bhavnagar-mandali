@@ -103,10 +103,6 @@ class CustomerController extends Controller
         $data['js'] = array('editcustomer.js');
         $data['customer'] = $customer;
         $data['member'] =$member;
-        // print_r($data);exit;
-       // $data['id'] = $id;
-
-
         return view('pages.editcustomer', $data);
     }
 

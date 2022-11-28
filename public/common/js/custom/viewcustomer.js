@@ -55,42 +55,41 @@ $(document).ready(function () {
                 title: "ID"
             },
             {
-                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: first_name #</div>",
-                field: "first_name",
-                title: "First Name"
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: name #</div>",
+                field: "name",
+                title: "NAME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: current_post #</div>",
                 field: "current_post",
-                title: "Current Post"
+                title: "CURRENT POST"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: branch_name #</div>",
                 field: "branch_name",
-                title: "Branch Name"
+                title: "BRANCH"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: member_nominee_name #</div>",
                 field: "member_nominee_name",
-                title: "Member Nominee Name"
+                title: "MEMBER NOMIENEE"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: bank_name #</div>",
                 field: "bank_name",
-                title: "Bank Name"
+                title: "BANK NAME"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: status #</div>",
                 field: "status",
-                title: "Status"
+                title: "STATUS"
             },
-
             {
                 template: function (dataItem) {
                     return manageAction(dataItem.id);
                 },
                 field: "action",
-                title: "ACTIONS",
+                title: "ACTION",
                 filterable: false,
             },
 

@@ -339,6 +339,7 @@ class Repository
             'td.loan_fd_amount',
             'td.current_pending_due',
             'td.current_balance',
+            'division.name as branch_name'
         );
 
         $columns = array(
@@ -348,15 +349,15 @@ class Repository
             'customer_name'         => DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
             'loan_fd_amount'        =>'td.loan_fd_amount',
             'current_pending_due'   =>'td.current_pending_due',
-            'current_balance'   =>'td.current_balance',
+            'current_balance'       =>'td.current_balance',
+            'branch_name'       =>'division.name as branch_name',
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
                 ->leftjoin('sub_scheme', 'sub_scheme.id', '=', 'td.sub_scheme_id')
                 ->leftjoin('member_details', 'member_details.id', '=', 'td.member_id')
                 ->leftjoin('scheme', 'scheme.id', '=', 'sub_scheme.scheme_id')
-                // ->where('td.loan_fd_amount', '!=' , '0')
-                // ->where('td.current_pending_due', '!=' , '0')
+                ->leftjoin('division', 'division.id', '=', 'member_details.branch_name')
                 ->select($columnArr);
 
         $this->gridDataFilter($query, $post, $columns);

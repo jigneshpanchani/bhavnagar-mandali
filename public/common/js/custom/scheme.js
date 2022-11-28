@@ -91,7 +91,6 @@ $(document).ready(function(){
 
     $("#addSchemeModal").kendoWindow(modalopen('Add Scheme'));
 
-
     $("#addSchemeForm").kendoForm({
         orientation: "vertical",
         items: [
@@ -139,10 +138,9 @@ $(document).ready(function(){
     $("#editSchemeModal").kendoWindow(modalopen('Edit Scheme'));
 
     $("body").on("click", ".editScheme", function(){
-
+        kendo.ui.progress($(document.body), true);
         let primaryID = $(this).attr('data-id');
         if (primaryID > 0) {
-            kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
                 url: site_url + "api/get-scheme-details",
@@ -162,14 +160,6 @@ $(document).ready(function(){
     });
 
     $("#editSchemeForm").kendoForm({
-        dataSource: customDataSource(
-            "api/scheme-data",{
-                name:    {type: "string"}
-            }
-        ),
-        formData: {
-            name: "",
-         },
         orientation: "vertical",
         items: [
             { field: "name", label: "Name:", validation: { required: { message: "Enter Scheme Name" } } },
@@ -190,9 +180,9 @@ $(document).ready(function(){
     });
 
       //delete
-      $("#deleteSchemenModal").kendoWindow(modalopen('Delete Scheme'));
+    $("#deleteSchemenModal").kendoWindow(modalopen('Delete Scheme'));
 
-      $("body").on("click", ".deleteScheme", function() {
+    $("body").on("click", ".deleteScheme", function() {
         let primaryID = $(this).attr('data-id');
         $("#deleteSchemenModal").data("kendoDialog").open();
         $("#deleteSchemenModal").find("#deleteAgentDocId").val(primaryID);
@@ -201,7 +191,7 @@ $(document).ready(function(){
       $("#deleteSchemenModal").kendoDialog({
         width: "400px",
         title: "Delete",
-        content: "Are you sure you want to Delete scheme? <input type='hidden' name='id' id='deleteAgentDocId' />",
+        content: "Are you sure you want to Delete Scheme? <input type='hidden' name='id' id='deleteAgentDocId' />",
         actions: [
             {text: 'Close'},
             {text: 'Yes', primary: true, action: function () { deleteSchemeFunction($("#deleteSchemenModal").find("#deleteAgentDocId").val()); } }

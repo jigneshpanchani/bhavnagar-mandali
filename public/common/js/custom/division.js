@@ -86,7 +86,6 @@ $(document).ready(function () {
                 $('#divisionList').data('kendoGrid').refresh();
                 $('#divisionList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);
-
             }
         });
     }
@@ -170,10 +169,9 @@ $(document).ready(function () {
     });
 
     $("body").on("click", ".editDivision", function () {
-
+        kendo.ui.progress($(document.body), true);
         let primaryID = $(this).attr('data-id');
         if (primaryID > 0) {
-            kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
                 url: site_url + "api/get-division-details",
@@ -205,7 +203,7 @@ $(document).ready(function () {
     $("#deleteDivisionModal").kendoDialog({
         width: "400px",
         title: "Delete",
-        content: "Are you sure you want to Delete User? <input type='hidden' name='id' id='deleteAgentDocId' />",
+        content: "Are you sure you want to Delete Division? <input type='hidden' name='id' id='deleteAgentDocId' />",
         actions: [
             { text: 'Close' },
             { text: 'Yes', primary: true, action: function () { deleteDivisionFunction($("#deleteDivisionModal").find("#deleteAgentDocId").val()); } }
@@ -215,7 +213,6 @@ $(document).ready(function () {
                 effects: "fade:in"
             }
         },
-        // open: onOpenDeleteDialog('#deleteUserModal'),
         visible: false
     });
 

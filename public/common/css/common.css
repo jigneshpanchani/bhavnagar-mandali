@@ -424,9 +424,9 @@ input:checked + .slider .off {
     display: none;
 }
 
-/* .k-invalid {
+.k-invalid {
     border: 1px solid red;
-} */
+}
 
 .k-label.k-form-label {
     color: #374151;
@@ -553,6 +553,6 @@ input:checked + .slider .off {
     margin-bottom: 5px;
 }
 
-/* .k-dialog-titlebar {
+.k-dialog-titlebar {
     background-color:#1890FF;
-} */
+}

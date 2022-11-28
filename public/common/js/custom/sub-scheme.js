@@ -208,25 +208,21 @@ $(document).ready(function(){
     $("#editSubSchemeModal").kendoWindow(modalopen('Edit Sub-Scheme'));
 
     $("body").on("click", ".editSubScheme", function(){
-
+        kendo.ui.progress($(document.body), true);
         let primaryID = $(this).attr('data-id');
         if (primaryID > 0) {
-            // kendo.ui.progress($(document.body), true);
             $.ajax({
                 type: "POST",
                 url: site_url + "api/get-sub-scheme-details",
                 dataType: "json",
                 data: {'id': primaryID},
                 success: function (response) {
-                    // kendo.ui.progress($(document.body), false);
+                    kendo.ui.progress($(document.body), false);
                     let editSubScheme = $(document).find('#editSubSchemeForm');
-                 //   console.log(response.data.scheme_id);  return false;
                     editSubScheme.find("#editId").val(primaryID);
                     editSubScheme.find('#name').val(response.data.name);
                     editSubScheme.find("#scheme_id").data('kendoDropDownList').value(response.data.scheme_id);
                     editSubScheme.find('#rate_of_int').val(response.data.rate_of_int);
-
-
                 }
             });
        }
@@ -236,7 +232,6 @@ $(document).ready(function(){
     $("#editSubSchemeForm").kendoForm({
         dataSource: customDataSource(
             "api/sub-scheme-data",{
-
                 name:    {type: "string"},
                 rate_of_int: { type: "integer"},
             }
@@ -277,16 +272,17 @@ $(document).ready(function(){
         }
     });
 
-      //delete
+    //delete
 
-      $("#deleteSubSchemenModal").kendoWindow(modalopen('Delete Sub-Scheme'));
-        $("#deleteSubSchemenModal").kendoDialog({
+    $("#deleteSubSchemenModal").kendoWindow(modalopen('Delete Sub-Scheme'));
+
+    $("#deleteSubSchemenModal").kendoDialog({
         width: "400px",
         title: "Delete",
-        content: "Are you sure you want to Delete User? <input type='hidden' name='id' id='deleteAgentDocId' />",
+        content: "Are you sure you want to Delete Sub-Scheme? <input type='hidden' name='id' id='deleteAgentDocId' />",
         actions: [
-            {text: 'Close'},
-            {text: 'Yes', primary: true, action: function () { deleteSubSchemeFunction($("#deleteSubSchemenModal").find("#deleteAgentDocId").val()); } }
+            { text: 'Close' },
+            { text: 'Yes', primary: true, action: function () { deleteSubSchemeFunction($("#deleteSubSchemenModal").find("#deleteAgentDocId").val()); } }
         ],
         animation: {
             open: {
@@ -303,6 +299,7 @@ $(document).ready(function(){
     });
 
     function deleteSubSchemeFunction(primaryID) {
+        kendo.ui.progress($(document.body), true);
         if (primaryID > 0) {
             kendo.ui.progress($(document.body), true);
             $.ajax({

@@ -19,6 +19,7 @@ $(document).ready(function () {
             dataType: "json",
             data: { 'action': 'updateStatus', 'data': dataArr },
             success: function (response) {
+
                 $('#customerList').data('kendoGrid').refresh();
                 $('#customerList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);

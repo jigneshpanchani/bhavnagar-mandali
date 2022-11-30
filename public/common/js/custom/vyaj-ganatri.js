@@ -8,6 +8,15 @@ $(document).ready(function(){
     $("#vyajGanatriList").kendoGrid({
         dataSource: customDataSource(
             "api/loan-transaction-data", {
+                account_no: { type: "string",  editable: false},
+                customer_name:  { type: "string",  editable: false },
+                branch_name: { type: "string",  editable: false},
+                sub_scheme_name: {type: "string",  editable: false},
+                loan_fd_amount: {type: "string",  editable: false },
+                current_pending_due: { type: "string",  editable: false },
+                installment_amount: {type: "string",  editable: false},
+                total_interest: {type: "string",  editable: false},
+                total_paid_amount: {type: "string" },
             },
 
         ),
@@ -24,12 +33,18 @@ $(document).ready(function(){
             {
                 template: "<div class='flex items-center text-sm leading-5 fff font-normal text-gray-600'>#: account_no #</div>",
                 field: "account_no",
-                title: "ACCOUNT NO"
+                title: "ACCOUNT NO",
+                editable: false
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: customer_name #</div>",
                 field: "customer_name",
-                title: "CUSTOMER NAME"
+                title: "CUSTOMER"
+            },
+            {
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: branch_name #</div>",
+                field: "branch_name",
+                title: "BRANCH"
             },
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: sub_scheme_name #</div>",
@@ -46,10 +61,43 @@ $(document).ready(function(){
                 field: "current_pending_due",
                 title: "CURRENT PENDING DUE"
             },
+            {
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: installment_amount #</div>",
+                field: "installment_amount",
+                title: "INSTALLMENT"
+            },
+            {
+                template: function(dataItem) {
+                    return interestCalculation(dataItem.intrest_rate, dataItem.installment_amount, dataItem.current_pending_due);
+                },
+                field: "total_interest",
+                title: "INTEREST",
+            },
+            {
+                template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: installment_amount #</div>",
+                field: "total_paid_amount",
+                title: "PAID AMOUNT"
+            },
+            {
+                selectable: true,
+                width: "50px",
+                //template: '<input type="checkbox" id="#=id#" class="gridCK" />'
+            },
         ],
+        editable: true,
         noRecords: noRecordTemplate()
     });
     customGridHtml("#vyajGanatriList");
+
+    function interestCalculation(intrest_rate, installment_amount, current_pending_due){
+
+        let rate = intrest_rate;
+        let remainingAmount = current_pending_due;
+        let emi = installment_amount;
+
+        let interestAmount = (rate/100/12) * remainingAmount;
+        return '<div class="flex items-center text-sm leading-5 font-normal text-gray-600">'+ Math.ceil(interestAmount) + '</div>';
+    }
 
 
     $("body").on("click", ".vyaj-ganatri", function(){
@@ -202,6 +250,8 @@ $(document).ready(function(){
             data: { 'action': type , 'data': dataArr },
             success: function (response) {
                 $(document).find('#'+modalId).getKendoWindow().close();
+                $('#vyajGanatriList').data('kendoGrid').refresh();
+                $('#vyajGanatriList').data('kendoGrid').dataSource.read();
                 notificationDisplay(response.message, '', response.status);
             }
         });
@@ -258,6 +308,115 @@ $(document).ready(function(){
 
         });
     }
+
+    $("#vyajGanatriFilterForm").kendoForm({
+        orientation: "vertical",
+        layout: "grid",
+        grid: {
+            cols: 8,
+            gutter: 20
+        },
+        items: [
+            {
+                field: "branch_name",
+                editor: "DropDownList",
+                label: "Select Branch Name:",
+                editorOptions: {
+                    optionLabel: "Select...",
+                    dataSource: getDropdownDataSource('get-division-name', []),
+                    dataValueField: "Id", //Id
+                    dataTextField: "Name"
+                },
+                colSpan: 3,
+            },
+            {
+                field: "scheme",
+                editor: "DropDownList",
+                label: "Select Yojna",
+                editorOptions: {
+                    select: function (e) {
+                        if (e.dataItem) {
+                            let postArr = { 'id': e.dataItem.Id }
+                            setDropdownList('sub_scheme_id', 'get-sub-scheme-name', postArr);
+                        }
+                    },
+                    optionLabel: "Select...",
+                    dataSource: getDropdownDataSource('get-scheme-name', {}),
+                    dataValueField: "Id", //Id
+                    dataTextField: "Name",
+                },
+                colSpan: 2,
+            },
+            {
+                field: "sub_scheme_id",
+                editor: "DropDownList",
+                label: "Select Sub Yojna",
+                editorOptions: { optionLabel: "Select..." },
+                colSpan: 3,
+            },
+            // {
+            //     field: "counting_from",
+            //     editor: "DropDownList",
+            //     label: "Counting From",
+            //     colSpan: 2,
+            //     editorOptions: {
+            //         optionLabel: "Select...",
+            //         dataTextField: "text",
+            //         dataValueField: "value",
+            //         dataSource:[
+            //                 {text:"Jan",value:"1"},
+            //                 {text:"Feb",value:"2"},
+            //                 {text:"Mar",value:"3"},
+            //                 {text:"Apr",value:"4"},
+            //                 {text:"May",value:"5"},
+            //                 {text:"Jun",value:"6"},
+            //                 {text:"Jul",value:"7"},
+            //                 {text:"Aug",value:"8"},
+            //                 {text:"Sep",value:"9"},
+            //                 {text:"Oct",value:"10"},
+            //                 {text:"Nov",value:"11"},
+            //                 {text:"Dec",value:"12"},
+            //         ],
+            //         change: onChangeCountingtDate,
+            //     },
+            //     validation: { required: { message: "Select Counting" } }
+            // },
+            // {
+            //     field: "start_date",
+            //     editor: "DatePicker",
+            //     label: "Start Date",
+            //     colSpan: 2,
+            //     validation: { required: true }
+            // },
+            // {
+            //     field: "end_date",
+            //     editor: "DatePicker",
+            //     label: "End Date",
+            //     colSpan: 2,
+            //     validation: { required: true }
+            // },
+        ],
+        buttonsTemplate:    '<div class="float-right flex space-x-4 items-center justify-end pb-6">\n' +
+                                '<button type="button" class="btn btn-outline-secondary font-weight-bold btn-sm cancel-btn" id="clearFilter">Cancel</button>\n' +
+                                '<button type="button" class="applyVyajGanatriFilter btn btn-primary font-weight-bold btn-sm">Apply Vyaj Filter</button>\n' +
+                            '</div>',
+    });
+
+    $('body').on('click', '.applyVyajGanatriFilter', function() {
+        let serializeArr = $(document).find("#vyajGanatriFilterForm").find('input[name], select[name], textarea[name]').serializeArray();
+        let dataArr = {}
+        $(serializeArr).each(function (i, field) {
+            dataArr[field.name] = field.value;
+        });
+        console.log(dataArr);
+        manageFilterOnGrid("#vyajGanatriList", 'extra', dataArr);
+    });
+
+    $('body').on('click', '#clearFilter', function(e) {
+        e.preventDefault();
+        $("#vyajGanatriList").data("kendoGrid").dataSource.filter([]);
+    });
+
 });
 
 

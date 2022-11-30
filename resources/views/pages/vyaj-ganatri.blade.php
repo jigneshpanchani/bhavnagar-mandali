@@ -7,12 +7,18 @@
         <div class="d-flex align-items-center flex-wrap mr-2">
             <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">{{ (@$pagetitle) ? $pagetitle : 'Static' }}</h5>
         </div>
-        <button class="vyaj-ganatri btn btn-primary font-weight-bolder btn-sm justify-end">vyaj-ganatri</button>
+        {{-- <button class="vyaj-ganatri btn btn-primary font-weight-bolder btn-sm justify-end">vyaj-ganatri</button> --}}
     </div>
 </div>
 
-<div class="bg-white p-1 rounded flex">
-    <div id='vyajGanatriList'>
+<div class="flex flex-col space-y-6">
+    <div class="bg-white px-6 py-4 rounded flex">
+        <form id="vyajGanatriFilterForm" class="flex w-full">
+        </form>
+    </div>
+    <div class="bg-white p-1 rounded flex">
+        <div id='vyajGanatriList'>
+        </div>
     </div>
 </div>
 

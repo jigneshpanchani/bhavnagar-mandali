@@ -374,7 +374,7 @@ class Repository
             'loan_fd_amount'        =>'td.loan_fd_amount',
             'current_pending_due'   =>'td.current_pending_due',
             'current_balance'       =>'td.current_balance',
-            'branch_name'       =>'division.name as branch_name',
+            'branch_name'           =>'division.name as branch_name'
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
@@ -422,7 +422,9 @@ class Repository
             'td.loan_fd_amount',
             'td.current_pending_due',
             'td.current_balance',
-            'division.name as branch_name'
+            'division.name as branch_name',
+            'td.installment_amount',
+            'td.intrest_rate',
         );
 
         $columns = array(
@@ -434,6 +436,8 @@ class Repository
             'current_pending_due'   =>'td.current_pending_due',
             'current_balance'       =>'td.current_balance',
             'branch_name'           =>'division.name as branch_name',
+            'installment_amount'    =>'td.installment_amount',
+            'intrest_rate'          => 'td.intrest_rate'
         );
 
         $query = TransactionDetails::from('transaction_detail as td')
@@ -447,6 +451,23 @@ class Repository
         $this->gridDataFilter($query, $post, $columns);
 
         $this->gridDataSorting($query, $post);
+
+        foreach ($customFilterParts as $filter) {
+            if($filter['field'] == 'extra' && isset($filter['value'])){
+                 /* grid wise custom filter apply here */
+                $query->where(function ($childQuery) use ($filter, $columns) {
+                    foreach ($filter['value'] as $fieldName => $fieldvalue) {
+                        if ($fieldName == 'branch_name' && $fieldvalue != '') {
+                            $childQuery->where('member_details.branch_name', $fieldvalue);
+                        } elseif ($fieldName == 'scheme' && $fieldvalue != '') {
+                            $childQuery->where('sub_scheme.scheme_id', $fieldvalue);
+                        } elseif ($fieldName == 'sub_scheme_id' && $fieldvalue != '') {
+                            $childQuery->where('td.sub_scheme_id', $fieldvalue);
+                        }
+                    }
+                });
+            }
+        }
 
         $result = $this->gridDataPagination($query, $post, $countOnly);
 

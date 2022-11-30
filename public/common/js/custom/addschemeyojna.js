@@ -61,6 +61,7 @@ $(document).ready(function () {
         var accountNo = $("#accountNo").val();
 
         if (dataArr.sub_scheme_id == 1 || dataArr.sub_scheme_id == 7) {
+            $("#customertransactionform")[0].reset();
             $(document).find('#customerTransactionBachatModal').find("#account_no").val(accountNo);
             $(document).find('#customerTransactionBachatModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerTransactionBachatModal').find("#member_id").val(member_id);
@@ -72,7 +73,7 @@ $(document).ready(function () {
 
         }
         if(dataArr.sub_scheme_id == 11 || dataArr.sub_scheme_id == 12) {
-
+            $("#customerFdform")[0].reset();
             $(document).find('#customerFdModal').find("#account_no").val(accountNo);
             $(document).find('#customerFdModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerFdModal').find("#member_id").val(member_id);
@@ -85,6 +86,7 @@ $(document).ready(function () {
         }
 
         if (dataArr.sub_scheme_id == 2 || dataArr.sub_scheme_id == 3 || dataArr.sub_scheme_id == 4 || dataArr.sub_scheme_id == 5) {
+            $("#customertransactionloanform")[0].reset();
             $(document).find('#customerTransactionLoanModal').find("#account_no").val(accountNo);
             $(document).find('#customerTransactionLoanModal').find("#intrest_rate").val(rateofInt);
             $(document).find('#customerTransactionLoanModal').find("#member_id").val(member_id);
@@ -147,7 +149,6 @@ $(document).ready(function () {
         sortable: true,
         resizable: true,
         scrollable: true,
-
         columns: [
             {
                 template: "<div class='flex items-center text-sm leading-5 font-normal text-gray-600'>#: id #</div>",

@@ -335,6 +335,9 @@ span.k-loading-text {
 #reportsFilterForm .k-form-layout{
     width: 100% !important;
 }
+#vyajGanatriFilterForm .k-form-layout{
+    width: 100% !important;
+}
 
 .k-form-field .k-widget.k-dropdown .k-dropdown-wrap{
     padding: 5px 0px;

@@ -14,12 +14,13 @@ class VyajGanatriController extends Controller
      */
     public function index()
     {
+
         $data['plugincss'] = array();
         $data['css'] = array();
         $data['pluginjs'] = array();
         $data['pagetitle'] = "Vyaj-Ganatri";
         $data['js'] = array('vyaj-ganatri.js');
-        
+
         return view('pages.vyaj-ganatri' ,$data);
     }
 
@@ -87,5 +88,15 @@ class VyajGanatriController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function showVyaj(){
+        $data['plugincss'] = array();
+        $data['css'] = array();
+        $data['pluginjs'] = array();
+        $data['pagetitle'] = "Show Vyaj";
+        $data['js'] = array('vyaj-ganatri.js');
+
+        return view('pages.vyaj-show' ,$data);
     }
 }

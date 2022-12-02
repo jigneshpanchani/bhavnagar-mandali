@@ -424,6 +424,7 @@ class Repository
             'td.current_balance',
             'division.name as branch_name',
             'td.installment_amount',
+            'td.installment_amount as total_paid_amount',
             'td.intrest_rate',
         );
 
@@ -437,6 +438,7 @@ class Repository
             'current_balance'       =>'td.current_balance',
             'branch_name'           =>'division.name as branch_name',
             'installment_amount'    =>'td.installment_amount',
+            'total_paid_amount'     =>'td.total_paid_amount',
             'intrest_rate'          => 'td.intrest_rate'
         );
 
@@ -446,6 +448,7 @@ class Repository
                 ->leftjoin('scheme', 'scheme.id', '=', 'sub_scheme.scheme_id')
                 ->leftjoin('division', 'division.id', '=', 'member_details.branch_name')
                 ->whereIn('sub_scheme_id', [ '2', '3', '4','5'])
+                ->where('current_pending_due', '>=' , 10)
                 ->select($columnArr);
 
         $this->gridDataFilter($query, $post, $columns);
@@ -468,6 +471,54 @@ class Repository
                 });
             }
         }
+
+        $result = $this->gridDataPagination($query, $post, $countOnly);
+
+        return $result;
+    }
+
+    public function getVyajShowData($request, $countOnly=false){
+        $post = ($request->input()) ? $request->input() : [];
+
+        $columnArr = array(
+            'td.id',
+            'td.account_no',
+            'sub_scheme.name as sub_scheme_name',
+             DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
+            'td.loan_fd_amount',
+            'td.current_pending_due',
+            'td.current_balance',
+            'division.name as branch_name',
+             DB::raw("SUM(vyavahar.interest_paid) as interest_paid"),
+            'td.intrest_rate',
+        );
+
+        $columns = array(
+            'id'                    =>'td.id',
+            'account_no'            =>'td.account_no',
+            'sub_scheme_name'       =>'sub_scheme.name as sub_scheme_name',
+            'customer_name'         => DB::raw("CONCAT(member_details.first_name,'  ',member_details.middle_name, '  ',member_details.last_name) as customer_name"),
+            'loan_fd_amount'        =>'td.loan_fd_amount',
+            'current_pending_due'   =>'td.current_pending_due',
+            'current_balance'       =>'td.current_balance',
+            'branch_name'           =>'division.name as branch_name',
+            'total_interest'        => DB::raw("SUM(vyavahar.interest_paid) as interest_paid"),
+            'intrest_rate'          => 'td.intrest_rate'
+        );
+
+        $query = TransactionDetails::from('transaction_detail as td')
+                ->leftjoin('sub_scheme', 'sub_scheme.id', '=', 'td.sub_scheme_id')
+                ->leftjoin('member_details', 'member_details.id', '=', 'td.member_id')
+                ->leftjoin('scheme', 'scheme.id', '=', 'sub_scheme.scheme_id')
+                ->leftjoin('division', 'division.id', '=', 'member_details.branch_name')
+                ->leftjoin('vyavahar', 'td.id', '=','vyavahar.transaction_id')
+                ->whereIn('sub_scheme_id', [ '2', '3', '4','5'])
+                ->groupBy('vyavahar.transaction_id')
+                ->select($columnArr);
+
+        $this->gridDataFilter($query, $post, $columns);
+
+        $this->gridDataSorting($query, $post);
 
         $result = $this->gridDataPagination($query, $post, $countOnly);
 

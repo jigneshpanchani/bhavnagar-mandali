@@ -44,7 +44,8 @@ Route::resource('reports', 'ReportsController');
 
 Route::resource('vyaj-ganatri', 'VyajGanatriController');
 
-
+// Route::get('profile', [UserController::class, 'show'])->middleware('auth');
+Route::match(['get', 'post'], 'show-vyaj', ['as' => 'show-vyaj', 'uses' => 'VyajGanatriController@showVyaj']);
 
 
 

@@ -148,7 +148,6 @@ class CustomerTransactionApiController extends Controller
             $data['date'] = date('Y-m-d', strtotime($data['date']));
             if($data['pay_receive'] == 'Pay'){
                 $rate = $getTrans->intrest_rate;
-                // dd($data); exit();
                 $emi = $data['amount'];
                 $remainingAmount = $getTrans->current_pending_due;
 
@@ -160,6 +159,10 @@ class CustomerTransactionApiController extends Controller
                 $data['interest_paid'] = $interestAmount;
                 $data['principal_paid'] = $principal;
                 $data['remaining_amount'] = $remainingAmount;
+            } else {
+                $data['interest_paid'] = 0;
+                $data['principal_paid'] = 0;
+                $data['remaining_amount'] = 0;
             }
             $data = $this->vyavaharModal->create($data);
              $result = ['status' => 'success', 'message' => 'vyavaharModal Created Sucessfully'];

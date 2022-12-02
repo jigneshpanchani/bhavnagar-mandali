@@ -65,10 +65,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
+
         $customer = DB::table('member_details')->where('id',$id)->first();
         $rateofint = DB::table('sub_scheme')->where('id',3)->first();
-        // $rateofint = DB::table('sub_scheme')->where('id',$customer->sub_scheme_id)->first();
-      //  print_r($rateofint); exit;
         $age = Carbon::parse($customer->DOB)->diff(Carbon::now())->format('%y years');
         $data['customerId'] = $id;
         $data['plugincss'] = array();
@@ -78,6 +77,7 @@ class CustomerController extends Controller
         $data['js'] = array('addschemeyojna.js','customertransactionfb.js','customertransactionloan.js','fd.js');
         $data['customer']="$customer->bank_account";
         $data['rateofint']="$rateofint->rate_of_int";
+
         return view('pages.yojna', $data);
 
     }

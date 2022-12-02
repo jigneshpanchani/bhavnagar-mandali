@@ -60,7 +60,7 @@ Route::match(['post'],          'get-customertransaction-details',          ['as
 
 Route::match(['post'],          'vyavahar-data',                            ['as' => 'vyavahar-data',           'uses' => 'api\CustomerTransactionApiController@getVyavaharData']);
 Route::match(['post'],          'vyavahar/ajaxAction',                      ['as' => 'ajaxAction',              'uses' => 'api\CustomerTransactionApiController@ajaxAction']);
-Route::match(['post'],          'customertransactionloan/ajaxAction',       ['as' => 'ajaxAction',                          'uses'  => 'api\CustomerTransactionApiController@ajaxAction']);
+Route::match(['post'],          'customertransactionloan/ajaxAction',       ['as' => 'ajaxAction',              'uses'  => 'api\CustomerTransactionApiController@ajaxAction']);
 
 //FD
 Route::match(['post'],         'fd/ajaxAction',                             ['as' => 'ajaxAction',              'uses'  => 'api\CustomerTransactionApiController@ajaxAction']);
@@ -72,6 +72,7 @@ Route::match(['post'],          'reports-data',                             ['as
 // Route::match(['post'],          'customertransactionloan-data',             ['as' => 'customertransactionloan-data',        'uses'  => 'api\CustomerTransactionApiController@getCustomertransactionloanData']);
 // Route::match(['post'],          'get-customertransactionloan-details',      ['as' => 'get-customertransactionloan-details', 'uses'  => 'api\CustomerTransactionApiController@getCustomertransactionloanDetails']);
 Route::match(['post'],          'loan-transaction-data',                    ['as' => 'loan-transaction-data',      'uses' => 'api\ReportsApiController@getLoanTransactionData']);
+Route::match(['post'],          'vyaj-show-data',                           ['as' => 'vyaj-show-data',             'uses' => 'api\ReportsApiController@getVyajShowData']);
 Route::match(['post'],          'get-customer-name',                        ['as' => 'get-customer-name',          'uses'  => 'api\CustomerApiController@getCustomerName']);
 Route::match(['post'],          'get-total-customer-account',               ['as' => 'get-total-customer-account', 'uses'  => 'api\CustomerApiController@getTotalCustomerAccount']);
 

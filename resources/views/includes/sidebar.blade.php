@@ -194,6 +194,14 @@
                         <span class="menu-text">Vyaj Ganatri</span>
                         </a>
                      </li>
+                     <li class="menu-item {{ ($currRoute == 'show-vyaj') ? 'menu-item-active' : ''}}" aria-haspopup="true">
+                        <a href="{{ route('show-vyaj') }}" class="menu-link">
+                        <i class="menu-bullet menu-bullet-dot">
+                        <span></span>
+                        </i>
+                        <span class="menu-text">Show Vyaj</span>
+                        </a>
+                     </li>
                </div>
             </li>
 

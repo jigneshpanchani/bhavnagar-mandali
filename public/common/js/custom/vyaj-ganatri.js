@@ -50,7 +50,8 @@ $(document).ready(function(){
             {
                 template: "<div class='flex items-center text-sm leading-5 font-semibold text-green-600'>#: interest_paid #</div>",
                 field: "total_interest",
-                title: "TOTAL INTEREST",
+                title: "TOTAL INTEREST"
+
             },
         ],
         noRecords: noRecordTemplate()
@@ -68,8 +69,8 @@ $(document).ready(function(){
                 current_pending_due: { type: "string",  editable: false },
                 installment_amount: {type: "string",  editable: false},
                 total_interest: {type: "string",  editable: false},
-                total_paid_amount: {type: "string" },
-            },
+                total_paid_amount: {type: "number" },
+            },{},{},  [{ field: "total_paid_amount", aggregate: "sum" }]
 
         ),
         pageable: customPageableArr(),
@@ -128,7 +129,8 @@ $(document).ready(function(){
             {
                 template: "<div class='flex items-center text-sm leading-5 font-semibold text-gray-600'>#: total_paid_amount #</div>",
                 field: "total_paid_amount",
-                title: "PAID AMOUNT"
+                title: "PAID AMOUNT",
+                footerTemplate: "Total: #: sum #"
             },
             {
                 selectable: true,
@@ -483,7 +485,6 @@ $(document).ready(function(){
                 current_pending_due : grid.dataItem(this).current_pending_due,
                 total_interest : Math.ceil(interestAmount)
             }
-
             selectedDataToEnter.push(array);
         });
 

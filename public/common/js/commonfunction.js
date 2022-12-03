@@ -205,7 +205,7 @@ $('#sort-item').change(function() {
         sessionStorage.setItem("SelItem", selVal);
     });
 
-function customDataSource(api_url, fields, dateField=[], extraField=[]){
+function customDataSource(api_url, fields, dateField=[], extraField=[], aggregateField=[]){
     return {
         type: "json",
         transport: {
@@ -239,7 +239,8 @@ function customDataSource(api_url, fields, dateField=[], extraField=[]){
         pageSize: 20,
         serverPaging: true,
         serverFiltering: true,
-        serverSorting: true
+        serverSorting: true,
+        aggregate:aggregateField
     }
 }
 

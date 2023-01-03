@@ -258,6 +258,4 @@ class CustomerApiController extends Controller
 
     }
 
-
-
 }
